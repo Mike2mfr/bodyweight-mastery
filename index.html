@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bodyweight Mastery</title>
+<meta name="description" content="Pick today's calisthenics skills, get a workout built from your level in each one.">
+<meta name="theme-color" content="#14171c"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: phone-first single column, bottom tab bar; chalk-on-graphite gym board, cobalt accent.
+   Sibling of Project Mastery: same type and surfaces, different accent and a pick-and-build flow. */
+:root{
+  --bg:#f1f0ec; --surface:#ffffff; --surface2:#e8e6e0; --line:#d6d2c8; --fg:#191c22; --mut:#666a70;
+  --accent:#1d4fc4; --accent-ink:#ffffff; --accentSoft:#dfe7fb;
+  --good:#2f7d4f; --warn:#a8650f; --bad:#b23a32;
+  --c-bal:#1f6f6a; --c-prs:#6a4c93; --c-psh:#c2501c; --c-pll:#2c63a8; --c-cor:#7a6a12; --c-leg:#4d6470;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-num:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14171c; --surface:#1c2027; --surface2:#262b34; --line:#333a45; --fg:#ebe9e4; --mut:#9a9da3;
+  --accent:#8fb4ff; --accent-ink:#10131a; --accentSoft:#22304f;
+  --good:#5fbf86; --warn:#e6a04a; --bad:#ef7d72;
+  --c-bal:#4fb3aa; --c-prs:#a98fd6; --c-psh:#ea8450; --c-pll:#78a8e6; --c-cor:#cdb84f; --c-leg:#8fa9b6; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14171c; --surface:#1c2027; --surface2:#262b34; --line:#333a45; --fg:#ebe9e4; --mut:#9a9da3;
+  --accent:#8fb4ff; --accent-ink:#10131a; --accentSoft:#22304f;
+  --good:#5fbf86; --warn:#e6a04a; --bad:#ef7d72;
+  --c-bal:#4fb3aa; --c-prs:#a98fd6; --c-psh:#ea8450; --c-pll:#78a8e6; --c-cor:#cdb84f; --c-leg:#8fa9b6; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.45;-webkit-tap-highlight-color:transparent}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{text-wrap:balance}
+.wrap{max-width:640px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top)) 16px calc(150px + env(safe-area-inset-bottom))}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.mut{color:var(--mut)}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.brand{font-family:var(--f-display);font-weight:800;font-size:40px;line-height:.9;text-transform:uppercase;letter-spacing:.01em}
+.brand small{display:block;font-family:var(--f-body);font-size:12px;font-weight:700;letter-spacing:.14em;color:var(--accent);margin-bottom:5px}
+.top .date{font-size:12.5px;color:var(--mut);text-align:right;white-space:nowrap}
+
+.sec{margin-top:22px}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:10px}
+.sec-h h2{font-family:var(--f-display);font-weight:800;font-size:26px;line-height:1;text-transform:uppercase}
+.sec-h .sub{font-size:12.5px;color:var(--mut)}
+.lede{font-size:14px;color:var(--mut);max-width:60ch}
+
+/* skill picker */
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sk{position:relative;display:grid;grid-template-columns:22px 1fr;gap:9px;align-items:start;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:11px 11px 10px;min-height:68px}
+.sk::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:var(--cc)}
+.sk .box{width:22px;height:22px;border-radius:7px;border:2px solid var(--line);display:grid;place-items:center;font-size:14px;font-weight:800;color:transparent;margin-top:1px}
+.sk.on{border-color:var(--accent);background:var(--accentSoft)}
+.sk.on .box{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.sk b{display:block;font-size:14.5px;line-height:1.2}
+.sk .meta{display:block;font-size:11.5px;color:var(--mut);margin-top:3px}
+.sk .meta .warnc{color:var(--warn);font-weight:700}
+.sk[disabled]{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:600}
+.chip.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chip.easy.on{background:var(--good);border-color:var(--good);color:#fff}
+.chip.right.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip.hard.on{background:var(--warn);border-color:var(--warn);color:#fff}
+.chip.sm{padding:5px 10px;font-size:12px}
+.lbl{font-size:12.5px;color:var(--mut);margin-right:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 16px;font-weight:700;font-size:14.5px}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.big{width:100%;padding:15px 16px;font-family:var(--f-display);font-size:22px;letter-spacing:.04em;text-transform:uppercase}
+.btn.ghost{background:transparent}
+.btn.sm{padding:7px 11px;font-size:12.5px;border-radius:10px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.danger{color:var(--bad)}
+
+.banner{margin-top:10px;padding:11px 13px;border-radius:12px;background:var(--surface2);font-size:13.5px}
+.banner b{display:block}
+.banner.warn{background:color-mix(in srgb,var(--warn) 16%,var(--surface))}
+.banner.good{background:color-mix(in srgb,var(--good) 16%,var(--surface))}
+.banner.acc{background:var(--accentSoft)}
+
+/* workout */
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.sum div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 10px}
+.sum b{display:block;font-family:var(--f-num);font-size:19px;line-height:1.1}
+.sum span{font-size:11px;color:var(--mut);letter-spacing:.06em;text-transform:uppercase}
+.prog{height:6px;border-radius:3px;background:var(--surface2);margin-top:12px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.blk{margin-top:20px}
+.blk-h{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-bottom:8px;padding-left:10px;border-left:3px solid var(--cc,var(--mut))}
+.blk-h h3{font-family:var(--f-display);font-weight:800;font-size:23px;line-height:1;text-transform:uppercase}
+.blk-h .sub{font-size:12px;color:var(--mut);margin-top:3px}
+.list{display:flex;flex-direction:column;gap:8px}
+.ex{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.ex.done{border-color:color-mix(in srgb,var(--good) 50%,var(--line))}
+.ex-row{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:11px 12px 11px 10px}
+.tick{width:28px;height:28px;border-radius:9px;border:2px solid var(--line);background:transparent;display:grid;place-items:center;font-weight:800;color:transparent;font-size:15px;padding:0}
+.ex.done .tick{background:var(--good);border-color:var(--good);color:#fff}
+.ex-main{background:none;border:0;text-align:left;padding:0;min-width:0}
+.ex-main b{display:block;font-size:14.5px;line-height:1.25}
+.ex-main .dose{font-family:var(--f-num);font-size:12.5px;color:var(--mut);margin-top:2px;display:block}
+.ex-main .dose em{font-style:normal;color:var(--accent);font-weight:700}
+.tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);border:1px solid var(--line);border-radius:6px;padding:2px 6px;white-space:nowrap}
+.ex-body{padding:0 12px 12px 50px;font-size:13.5px;display:flex;flex-direction:column;gap:10px}
+.ex-body p{max-width:60ch}
+.pips{display:flex;gap:5px;flex-wrap:wrap}
+.pip{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);font-family:var(--f-num);font-size:11px;display:grid;place-items:center;color:var(--mut)}
+.pip.on{background:var(--good);border-color:var(--good);color:#fff}
+.swap{font-size:12.5px;color:var(--mut)}
+.res{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--mut)}
+.res input{width:74px;padding:7px 8px;border-radius:9px;border:1px solid var(--line);background:var(--bg);font-family:var(--f-num)}
+
+/* timer dock */
+.dock{position:fixed;left:0;right:0;bottom:calc(62px + env(safe-area-inset-bottom));z-index:6;display:none}
+.dock.on{display:block}
+.dock-in{max-width:640px;margin:0 auto;padding:0 12px}
+.timer{background:var(--fg);color:var(--bg);border-radius:16px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.timer .ph{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.timer .nm{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:46vw}
+.timer .clock{font-family:var(--f-num);font-size:40px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.timer .tb{display:flex;gap:6px;justify-content:flex-end;margin-top:6px}
+.timer .tb button{background:transparent;border:1px solid color-mix(in srgb,var(--bg) 45%,transparent);color:var(--bg);border-radius:9px;padding:6px 10px;font-size:12.5px;font-weight:700}
+.timer.work{background:var(--accent);color:var(--accent-ink)}
+.timer.work .tb button{color:var(--accent-ink);border-color:color-mix(in srgb,var(--accent-ink) 45%,transparent)}
+
+/* tabs */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.tabs-in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+.tab{background:none;border:0;padding:10px 0 9px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);border-top:3px solid transparent}
+.tab.on{color:var(--fg);border-top-color:var(--accent)}
+
+/* skills tab */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.card-h{width:100%;display:grid;grid-template-columns:1fr;gap:7px;justify-items:start;background:none;border:0;text-align:left;padding:13px 14px;border-left:4px solid var(--cc)}
+.card-h b{font-size:16px;display:block}
+.card-h .sub{font-size:12.5px;color:var(--mut)}
+.lv{font-family:var(--f-num);font-weight:700;font-size:13px;background:var(--surface2);border-radius:8px;padding:4px 8px;white-space:nowrap}
+.card-b{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px}
+.ladder{display:flex;flex-direction:column;gap:8px}
+.rung{border:1px solid var(--line);border-radius:12px;padding:10px 12px;display:grid;grid-template-columns:30px 1fr;gap:10px}
+.rung .n{font-family:var(--f-display);font-weight:800;font-size:26px;line-height:1;color:var(--mut)}
+.rung.cur{border-color:var(--accent);background:var(--accentSoft)}
+.rung.cur .n{color:var(--accent)}
+.rung.past .n{color:var(--good)}
+.rung h4{margin:0;font-size:14.5px}
+.rung dl{margin:6px 0 0;font-size:12.5px;display:grid;gap:4px}
+.rung dt{font-weight:700;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.rung dd{margin:0}
+.rung .acts{margin-top:9px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.drills{margin:6px 0 0;padding-left:18px;font-size:12.5px}
+.step{display:inline-flex;align-items:center;gap:8px;font-size:12.5px}
+.step button{width:30px;height:30px;border-radius:9px;border:1px solid var(--line);background:var(--surface);font-weight:800}
+
+/* log */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px}
+.tile b{display:block;font-family:var(--f-num);font-size:24px;line-height:1.1}
+.tile span{font-size:11px;color:var(--mut);letter-spacing:.06em;text-transform:uppercase}
+.cal{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:10px}
+.cal i{display:block;aspect-ratio:1;border-radius:6px;background:var(--surface2);font-style:normal;font-size:9.5px;color:var(--mut);display:grid;place-items:center}
+.cal i.on{background:var(--accent);color:var(--accent-ink);font-weight:700}
+.cal i.today{outline:2px solid var(--fg);outline-offset:1px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:700;padding:6px 6px 6px 0;border-bottom:1px solid var(--line)}
+td{padding:8px 6px 8px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td.num,th.num{text-align:right;padding-right:0}
+.hist{display:flex;flex-direction:column;gap:8px}
+.h-it{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.h-it .hd{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.h-it .sk-l{font-size:13px;margin-top:4px}
+.h-it .rs{font-size:12px;color:var(--mut);margin-top:4px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:1px}
+
+/* guide */
+.prose{display:flex;flex-direction:column;gap:10px;font-size:14px;max-width:65ch}
+.prose ol,.prose ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.fold{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.fold summary{padding:13px 14px;font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.fold summary::-webkit-details-marker{display:none}
+.fold summary::after{content:"+";font-family:var(--f-num);color:var(--mut)}
+.fold[open] summary::after{content:"−"}
+.fold .in{padding:0 14px 14px}
+.src{display:grid;gap:10px;font-size:13.5px}
+.src b{display:block}
+textarea{width:100%;min-height:90px;border-radius:10px;border:1px solid var(--line);background:var(--bg);padding:9px;font-family:var(--f-num);font-size:11.5px}
+.sw{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.sw:last-child{border-bottom:0}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(140px + env(safe-area-inset-bottom));background:var(--fg);color:var(--bg);padding:9px 14px;border-radius:999px;font-size:13px;font-weight:600;z-index:9;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+@media (max-width:380px){.pick{grid-template-columns:1fr}.brand{font-size:34px}.timer .clock{font-size:34px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* skill pills: same control as the session-length picker */
+.chip.skc{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;font-size:13.5px}
+.chip.skc i{width:8px;height:8px;border-radius:50%;background:var(--cc);flex:none}
+.chip.skc .num{font-size:11px;opacity:.7}
+.chip.skc[disabled]{opacity:.45;cursor:not-allowed}
+.picked{margin-top:12px;display:grid;gap:6px;font-size:13px;border-left:3px solid var(--accent);padding-left:10px}
+.picked b{margin-right:8px}
+.warnc{color:var(--warn);font-weight:700}
+
+.picked .row{gap:6px}
+.picked > div{padding-bottom:4px}
+td.num,th.num{padding-left:12px;white-space:nowrap}
+</style></head>
+<body>
+<div class="wrap"><main id="view"></main></div>
+<div id="dock" class="dock"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<nav class="tabs" aria-label="Sections"><div class="tabs-in"><button class="tab" data-tab="today">Today</button><button class="tab" data-tab="skills">Skills</button><button class="tab" data-tab="care">Prehab</button><button class="tab" data-tab="log">Log</button><button class="tab" data-tab="guide">Guide</button></div></nav>
+<script>
+/* Bodyweight Mastery: skills, levels and exercises.
+   Exercise row: [role, day, name, dose, restSec, cue, swap, needs]
+   role  P = main skill work (always in the session) · S = strength support · A = accessory / mobility
+   day   A / B = alternating session variants · * = both
+   dose  h4x30 = 4 holds of 30s · r3x5 = 3 sets of 5 reps · a60 = collect 60s in as few sets as possible
+         t10 = 10 quality attempts · m8 = 8-minute practice window · trailing s = each side
+   needs bar / band / pb (parallettes or blocks) / wt (weights) / dip / pole  */
+const CATS = {
+  balance: { n: 'Balance', c: 'var(--c-bal)' },
+  press:   { n: 'Press', c: 'var(--c-prs)' },
+  push:    { n: 'Push strength', c: 'var(--c-psh)' },
+  pull:    { n: 'Pull strength', c: 'var(--c-pll)' },
+  core:    { n: 'Core', c: 'var(--c-cor)' },
+  legs:    { n: 'Legs', c: 'var(--c-leg)' }
+};
+
+const SKILLS = [
+/* ───────────────────────── HANDSTAND ───────────────────────── */
+{ id: 'hs', name: 'Handstand', short: 'HS', cat: 'balance', order: 1, prep: ['wrist', 'shoulder'], freq: '4–6 × / week, short and fresh',
+  blurb: 'A straight, quiet freestanding handstand. Balance is a skill: many short, clean attempts beat a few long, tired ones.',
+  levels: [
+  { n: 'Wall line', here: 'New to handstands, or a chest-to-wall hold under 45s.', test: 'Chest-to-wall hold 60s with a straight line, plus 5 controlled kick-ups to the wall.', ex: [
+    ['P','A','Chest-to-wall handstand hold','h4x30',60,'Walk the feet up, nose and toes near the wall. Push the floor away, ribs in, squeeze the glutes.','Feet-on-box pike hold'],
+    ['P','A','Kick-up to the wall (back to wall)','r3x5',45,'Same lead leg each rep. Arrive softly: the heels should kiss the wall, not hit it.','Wall walk, halfway up'],
+    ['P','B','Chest-to-wall shoulder shrugs','r3x10',45,'Arms locked. Sink 2cm through the shoulders, then push as tall as you can and pause 1s.','Standing overhead shrugs with a stick'],
+    ['P','B','Back-to-wall hold, one foot off the wall','h4x20',60,'Float one heel, then swap. Find the pressure in the fingertips that keeps you there.','Back-to-wall hold'],
+    ['S','*','Crow pose hold','h3x20',45,'Knees on the upper arms, lean until the toes float. Teaches you to save balance with the fingers.','Frog stand with toes down'],
+    ['S','*','Hollow body hold','h3x30',45,'Lower back glued to the floor, arms by the ears. This is your handstand shape lying down.','Tuck hollow hold'],
+    ['A','*','Wall shoulder-opening stretch','h2x45',20,'Hands on the wall at hip height, chest sinks, ribs stay in.','Puppy pose on the floor'] ] },
+  { n: 'Leaving the wall', here: 'Wall hold 60s is solid, free balance lasts under 5s.', test: 'Freestanding 10s on 3 of 5 attempts.', ex: [
+    ['P','A','Heel pulls (back to wall)','r4x5',45,'Start with heels on the wall. Press the fingertips to pull the heels off, hold 2s, return softly.','Back-to-wall hold with one foot floating'],
+    ['P','A','Toe pulls (chest to wall)','r4x5',45,'Shift the weight to the heel of the hand until the toes leave the wall, hold 2s.','Chest-to-wall hold'],
+    ['P','B','Back-to-wall tuck balance','h4x15',60,'Hips on the wall, knees tucked. Take the hips off and balance the tuck.','Back-to-wall straddle balance'],
+    ['P','B','Chest-to-wall handstand hold','h3x45',60,'Line check before the balance work. Tall shoulders, eyes between the thumbs.','Feet-on-box pike hold'],
+    ['P','*','Freestanding kick-up attempts','t10',40,'Kick to balance, not past it. Count only the attempts where you arrive stacked.','Kick-ups a hand-length from the wall'],
+    ['S','*','Feet-elevated pike push-up','r3x6',75,'Hips above the shoulders, head travels forward of the hands.','Pike push-up on the floor'],
+    ['S','*','Hollow rocks','r3x15',45,'Rock without changing shape. Lower back never lifts.','Hollow body hold 30s'],
+    ['A','*','Jefferson curl, bodyweight','r2x8',20,'Roll down one vertebra at a time, legs straight. Slow.','Standing forward fold 45s'] ] },
+  { n: 'Free balance', here: 'You hold a freestanding handstand around 10s.', test: 'Freestanding 30s with a straight line, twice in one session.', ex: [
+    ['P','*','Freestanding handstand, max holds','t8',60,'No more than 8 attempts. Stop the set when the line breaks, not when you fall.','Heel pull to free hold'],
+    ['P','A','Heel pull to free hold','r3x5',45,'Leave the wall with the fingertips and stay off it as long as you can.','Heel pulls'],
+    ['P','A','Tuck handstand','a30',0,'Collect 30s. Knees to chest, hips stay over the hands. A light wall touch is fine.','Back-to-wall tuck balance'],
+    ['P','B','Toe pull to free hold','r3x5',45,'Chest-to-wall start. Leaving this way builds the straightest line.','Toe pulls'],
+    ['P','B','Straddle handstand','a30',0,'Collect 30s. Legs wide, toes pointed, hips still.','Back-to-wall straddle balance'],
+    ['S','*','Chest-to-wall handstand hold','h2x60',75,'Endurance for the line. Push taller every 10s.','Chest-to-wall hold 2 × 45s'],
+    ['S','*','Wall handstand shoulder taps','r3x6s',60,'Chest to wall, shift first, then lift the hand. Hips do not swing.','Chest-to-wall weight shifts'],
+    ['A','*','Seated straddle good morning','r2x10',20,'Sit tall in a straddle, hinge forward with a long spine.','Seated straddle stretch 45s'] ] },
+  { n: 'Endurance and shapes', here: 'Freestanding 30s is repeatable.', test: 'Freestanding 60s, and straight → straddle → tuck → straight three times without coming down.', ex: [
+    ['P','*','Freestanding handstand hold','a120',0,'Collect 2 minutes in as few sets as you can. Rest fully between sets.','Chest-to-wall hold 3 × 60s'],
+    ['P','A','Tuck-downs','r3x5',60,'From straight, lower to a tuck and extend again. Shoulders stay open.','Tuck handstand, collect 30s'],
+    ['P','A','Straddle scissors','r3x8',45,'Split the legs front and back, switch slowly. The hands stay quiet.','Straddle handstand, collect 30s'],
+    ['P','B','Shape changes: straight, straddle, tuck','r4x3',60,'One rep is the full cycle. Slow transitions, 2s in each shape.','Tuck-downs'],
+    ['P','B','Tuck, straddle and pike jump entries','r3x5',45,'Hands down first, then jump the hips over the shoulders. Rotate the entry each set.','Kneeling straddle jump'],
+    ['S','*','Kneeling straddle jump to handstand','r3x5',45,'Start kneeling, hands planted. Small jump, hips rise, 5s hold at the top.','Back-to-wall straddle jump'],
+    ['A','*','Middle split hold','h2x45',20,'Hips open, toes up. Breathe out longer than in.','Butterfly stretch 60s'] ] },
+  { n: 'Mastery', here: 'Freestanding 60s under control.', test: '5 minutes collected in 5 sets or fewer, with every entry and head position.', ex: [
+    ['P','A','Freestanding handstand, long sets','a240',0,'Collect 4 minutes in 5 sets or fewer.','Collect 2 minutes'],
+    ['P','A','Head positions: in, neutral, look up','h3x15',60,'5s in each. The line must not change when the head moves.','Chest-to-wall, three head positions'],
+    ['P','B','Entry series: straddle, tuck, pike','r3x5',60,'One of each entry per rep, hold 5s between.','Jump entries'],
+    ['P','B','Shape flow: straddle, diamond, tuck, seven','r4x3',60,'Slow transitions between all four shapes.','Shape changes'],
+    ['P','B','Straddle flags (side bends)','r3x6s',60,'In a wide straddle, tilt the hips to one side and return. First step toward one arm.','Straddle weight shifts'],
+    ['S','*','Freestanding shoulder taps','r3x4s',75,'Shift, pause, tap. If it turns into a hop, go back to the wall.','Wall shoulder taps'],
+    ['A','*','Pancake stretch','h2x60',20,'Wide straddle, hinge from the hips, chest toward the floor.','Seated straddle good morning'] ] } ] },
+
+/* ───────────────────────── ONE-ARM HANDSTAND ───────────────────────── */
+{ id: 'oahs', name: 'One-arm handstand', short: 'OAHS', cat: 'balance', order: 2, prep: ['wrist', 'shoulder', 'hips'], freq: '3–5 × / week, quality windows',
+  blurb: 'Built on a rock-solid two-arm handstand. Progress comes in seconds, so keep the windows short and stop when quality drops. Weaker side first.',
+  levels: [
+  { n: 'Weight shift', here: 'Freestanding handstand 45–60s. New to one-arm work.', test: 'Straddle weight-shift hold 30s each side with the free hand light on the floor.', ex: [
+    ['P','*','Straddle weight-shift hold','h6x10s',45,'Wide straddle. Move the hips over one hand until the other hand is almost empty.','Chest-to-wall shoulder leans'],
+    ['P','A','Chest-to-wall shoulder leans','r3x5s',45,'Lean the shoulder over one hand, pause 3s, return through the middle.','Chest-to-wall weight shifts, small range'],
+    ['P','A','Straddle flags (side bends)','r3x6s',60,'Tilt the hips sideways with both hands down. The supporting shoulder pushes tall.','Wall straddle side bends'],
+    ['P','B','Tuck-downs','r3x8',45,'Control of the hips over the hands. Slow down, slow up.','Tuck handstand, collect 30s'],
+    ['P','B','Chest-to-wall elbow taps','r3x5s',45,'Shift, then touch the opposite elbow. Slower than a shoulder tap.','Chest-to-wall shoulder leans'],
+    ['S','*','One-arm wall support, chest to wall','h3x10s',60,'Feet wide on the wall, free hand on fingertips, then lifted when you can.','Chest-to-wall hold 60s'],
+    ['A','*','Seated straddle stretch','h2x60',20,'Rest here between balance sets as well.','Butterfly stretch'] ] },
+  { n: 'Fingertip assist', here: 'Weight shifts are stable for 30s each side.', test: 'Freestanding straddle with the free hand on two fingertips, 10s each side.', ex: [
+    ['P','*','Fingertip-assist hold on the wall','h4x15s',45,'Chest to wall, straddle. Free hand on the fingertips only, like playing a piano key.','One-arm wall support with a flat hand'],
+    ['P','A','Freestanding straddle fingertip hold','h4x8s',60,'Same thing off the wall. Take fingers away one at a time.','Straddle weight-shift hold'],
+    ['P','A','Straddle side bends in the fingertip position','r3x5s',60,'Small tilts of the hips while the fingertips stay light.','Straddle flags'],
+    ['P','B','Block walk-downs','t6',45,'Free hand on a block or stacked books. Walk the fingers to the edge and off. 3 per side.','Fingertip-assist hold on the wall','pb'],
+    ['P','B','Straddle weight-shift hold','h4x15s',45,'Longer holds than level 1. The free hand weighs nothing.','Chest-to-wall shoulder leans'],
+    ['S','*','Chest-to-wall shrugs, one arm loaded','r3x6s',60,'Shift to one arm and shrug tall. The shoulder must never sink.','Chest-to-wall shoulder shrugs'],
+    ['A','*','Middle split hold','h2x45',20,'A wider straddle makes one-arm balance much easier.','Frog stretch'] ] },
+  { n: 'Lift-offs', here: '10s on two fingertips each side.', test: 'Free one-arm hold of 3s on the better side.', ex: [
+    ['P','*','One-arm practice window','m8',0,'Alternate sides, weaker first. Rest as long as you like. Stop when three attempts in a row are worse than your best.','Freestanding fingertip hold'],
+    ['P','A','Fingertip lifts','t6',45,'From the fingertip hold, lift the free hand 1cm and place it back. 3 per side.','Freestanding straddle fingertip hold'],
+    ['P','A','Freestanding straddle fingertip hold','h3x10s',60,'One finger if you can.','Fingertip-assist hold on the wall'],
+    ['P','B','Arm lifts to the hip','t6',45,'Lift and bring the free hand to the hip. 3 per side.','Fingertip lifts'],
+    ['P','B','Block walks','m5',0,'Walk the free hand on and off a block, 5 minutes with rests in a straddle stretch.','Fingertip-assist hold on the wall','pb'],
+    ['S','*','One-arm wall line hold','h3x15s',60,'Chest to wall, free hand on the hip. Hip over hand, shoulder open.','One-arm wall support on fingertips'],
+    ['A','*','Cossack squat','r2x8s',20,'Open the hips for a wider straddle.','Frog stretch 45s'] ] },
+  { n: 'Free holds', here: 'You hold a one-arm handstand about 3s.', test: '10s on the better side and 5s on the other.', ex: [
+    ['P','*','One-arm practice window','m10',0,'Max holds each side. Film it: hip over hand, shoulder open, free arm relaxed.','Fingertip lifts'],
+    ['P','A','Straddle one-arm entries','t8',60,'Shift, lift, hold, place the hand back with control. 4 per side.','Arm lifts to the hip'],
+    ['P','A','Freestanding straddle fingertip hold','h3x15s',60,'A warm-up for the window now.','Fingertip-assist hold on the wall'],
+    ['P','B','One-arm holds, collected','a40',0,'Collect 20s per arm in up to 6 sets per side.','One-arm practice window'],
+    ['P','B','One-arm flags','r3x3s',75,'On one arm, tilt the hips a few centimetres out and back.','Straddle side bends in the fingertip position'],
+    ['S','*','One-arm wall line hold','h3x20s',60,'Endurance for the supporting shoulder.','Chest-to-wall hold 60s'],
+    ['A','*','Pancake stretch','h2x60',20,'','Seated straddle stretch'] ] },
+  { n: 'Mastery', here: '10s one-arm on the better side.', test: '20–30s straddle on the better side, 10–15s on the other, 5s with legs together.', ex: [
+    ['P','*','One-arm holds, collected','a60',0,'Collect 30s per arm in up to 6 sets per side.','One-arm practice window'],
+    ['P','A','Leg shapes on one arm','t6',75,'Straddle to legs together and back. 3 per side.','Straddle one-arm entries'],
+    ['P','A','One-arm entries from a straight handstand','t6',60,'Shift with legs together, open only if you need to.','Straddle one-arm entries'],
+    ['P','B','One-arm flags','r4x3s',75,'Bigger range than level 4.','Straddle flags'],
+    ['P','B','One-arm practice window','m8',0,'Play: switches from arm to arm, head positions.','Fingertip lifts'],
+    ['S','*','One-arm wall line hold','h3x30s',60,'','One-arm wall line hold 15s'],
+    ['A','*','Middle split hold','h2x60',20,'','Pancake stretch'] ] } ] },
+
+/* ───────────────────────── PRESS TO HANDSTAND ───────────────────────── */
+{ id: 'press', name: 'Handstand press', short: 'Press', cat: 'press', order: 3, prep: ['wrist', 'shoulder', 'hips'], freq: '2–4 × / week',
+  blurb: 'Straddle, pike and stalder press. It is half shoulder strength, half compression and pancake, so the mobility work counts as training.',
+  levels: [
+  { n: 'Compression and mobility', here: 'No press yet. Pancake and pike are tight, or the hips will not lift.', test: '15 seated pike leg lifts and a 10s bottom-of-press hold on the tips of the toes.', ex: [
+    ['P','*','Seated pike leg lifts','r3x10',45,'Hands beside the knees, legs locked. Lift both heels and pause 1s.','One leg at a time'],
+    ['P','A','Bottom-of-press hold','h3x10',60,'Hands down, shoulders far over the hands, hips high, only the toe tips on the floor.','Shoulder wall leans'],
+    ['P','A','Shoulder wall leans','r3x5',45,'In a wall handstand facing the wall, lean the shoulders past the hands and push back.','Planche lean'],
+    ['P','B','Seated straddle leg lifts','r3x10',45,'Hands between the legs. Lift both legs without leaning back.','One leg at a time'],
+    ['P','B','Back-to-wall forward fold hold','h3x30',45,'Hips on the wall, hands on the floor, fold as deep as you can with the legs straight.','Standing forward fold'],
+    ['S','*','Standing straddle good morning','r3x8',45,'Wide stance, long spine, hinge until the chest is level.','Seated straddle good morning'],
+    ['S','*','L-sit, tucked or full','h3x10',60,'Push the floor away, shoulders down.','Tuck L-sit on blocks'],
+    ['A','*','Pancake stretch','h2x60',20,'','Seated straddle stretch'] ] },
+  { n: 'Negatives', here: 'Compression is there, but you cannot lower slowly from a handstand.', test: '3 back-to-wall straddle press negatives of 5s each.', ex: [
+    ['P','*','Back-to-wall straddle press negative','r3x3',75,'From a wall handstand, straddle and lower the feet as slowly as you can. Shoulders lean forward to balance the hips.','Straddle jump to handstand with a slow return'],
+    ['P','A','Straddle jump to handstand','r3x5',45,'Hands planted, small jump, hips rise before the legs close.','Kneeling straddle jump'],
+    ['P','A','Bottom-of-press hold','h3x12',60,'Higher hips than last level. Try to unweight the toes.','Shoulder wall leans'],
+    ['P','B','Pike jump to handstand','r3x5',45,'Legs together. Demands more lean and more compression.','Straddle jump to handstand'],
+    ['P','B','Chest-to-wall tuck slides','r3x5',45,'Slide the knees down the wall to a tuck and back up. Hips stay over the hands.','Chest-to-wall tuck hold 30s'],
+    ['S','*','Straddle L-sit hold','h3x10',60,'Hands between the legs, both heels up.','One-leg straddle L-sit'],
+    ['S','*','Toes to bar','r3x5',60,'Straight legs, no swing.','Lying leg raise','bar'],
+    ['A','*','Jefferson curl, bodyweight','r2x8',20,'','Standing forward fold 45s'] ] },
+  { n: 'Straddle press', here: 'Slow wall negatives, but no press from the floor.', test: '3 straddle presses from the floor in a row.', ex: [
+    ['P','*','Straddle press attempts','m10',0,'10 minutes. Use a small hop if needed and always lower slowly. Partial range counts.','Partial-range straddle press'],
+    ['P','A','Partial-range straddle press','r5x3',45,'From a handstand, lower halfway and press back up.','Back-to-wall straddle press negative'],
+    ['P','A','Chest-to-wall straddle press negative','r3x2',75,'Facing the wall forces the lean. Toes slide down the wall.','Back-to-wall straddle press negative'],
+    ['P','B','Elevated straddle press','r4x3',60,'Feet on a box or step, hands on the floor. The height shortens the hardest part.','Straddle jump to handstand'],
+    ['P','B','Bottom-of-press hold','h3x12',60,'Float the toes for the last 3s.','Shoulder wall leans'],
+    ['S','*','Kneeling straddle jump','r3x3',45,'Start kneeling with hands planted. Tiny jump.','Straddle jump to handstand'],
+    ['S','*','Straddle L-sit hold','h3x12',60,'','L-sit hold'],
+    ['A','*','Pancake stretch','h2x60',20,'','Seated straddle good morning'] ] },
+  { n: 'Pike press', here: 'Straddle press from the floor ×3.', test: '5 straddle presses and 1 pike press from the floor.', ex: [
+    ['P','*','Straddle press to handstand','r4x3',75,'Clean reps, legs locked, no hop.','Straddle press attempts'],
+    ['P','A','Pike press negative','r3x3',75,'Legs together, lower as slowly as possible, 5s on the toe tips at the bottom.','Straddle press negative'],
+    ['P','A','Partial-range pike press','r4x3',60,'Lower halfway with legs together, press back.','Partial-range straddle press'],
+    ['P','B','Pike press attempts','t10',45,'Slight hop allowed, slow negative every time.','Elevated pike press'],
+    ['P','B','Back-to-wall pike, deep reps','r3x5',45,'Hips on the wall, fold as deep as possible and lift the hips back.','Back-to-wall forward fold hold'],
+    ['S','*','Press to straddle L and back','r3x2',75,'Lower from handstand to a straddle L-sit without the feet touching, press back up.','Straddle L-sit hold'],
+    ['A','*','Seated pike leg lifts','r2x12',30,'','Pike stretch 60s'] ] },
+  { n: 'Stalder press', here: 'Pike press from the floor.', test: '3 stalder presses in a row.', ex: [
+    ['P','*','Stalder press attempts','t6',60,'From a straddle L-sit, lean, lift the hips and press. Full attempt each time.','Partial-range stalder press'],
+    ['P','A','Stalder negative, hands elevated','r5x1',60,'On blocks. Lower from handstand all the way to a straddle L-sit.','Press to straddle L and back','pb'],
+    ['P','A','Straddle press to handstand','r2x3',60,'Warm-up reps.','Straddle press attempts'],
+    ['P','B','Partial-range stalder press','r5x1',60,'From the straddle L-sit, lift the hips as high as you can and return.','Straddle L-sit hold'],
+    ['P','B','Tuck press to handstand','r3x2',60,'From a tuck L-sit on the hands.','Straddle press to handstand'],
+    ['S','*','Straddle L-sit hold','h3x15',60,'Heels above hip height.','L-sit hold'],
+    ['A','*','Pancake stretch','h2x60',20,'Stay in the stretch between press attempts.','Seated straddle stretch'] ] } ] },
+
+/* ───────────────────────── HANDSTAND PUSH-UP ───────────────────────── */
+{ id: 'hspu', name: 'Handstand push-up', short: 'HSPU', cat: 'push', order: 7, prep: ['wrist', 'shoulder'], freq: '2–3 × / week',
+  blurb: 'From pike push-ups to wall, freestanding, deficit and 90° handstand push-ups. Each pressing set is paired with a pull to keep the shoulders balanced.',
+  levels: [
+  { n: 'Pike strength', here: 'Fewer than 8 feet-elevated pike push-ups.', test: '8 feet-elevated pike push-ups with the head touching in front of the hands.', ex: [
+    ['P','A','Pike push-up','r4x6',75,'Hips high, elbows track back at 45°, head lands in front of the hands to make a triangle.','Incline pike push-up, hands on a step'],
+    ['P','B','Feet-elevated pike push-up','r4x5',90,'Feet on a box at hip height. The more vertical the torso, the closer to the real thing.','Pike push-up'],
+    ['P','*','Wall walk to chest-to-wall hold','r3x3',60,'Walk up, hold 5s, walk down under control.','Feet-on-box pike hold 20s'],
+    ['S','*','Bodyweight row','r3x8',60,'Body straight, chest to the bar or table edge.','Table row','bar'],
+    ['S','*','Scapula push-ups','r3x10',30,'Arms locked. Sink between the shoulder blades, then push the upper back to the ceiling.','On the knees'],
+    ['A','*','Shoulder external rotation','r2x8s',20,'Elbow by the side, slow, light band or small weight.','Cuban rotation with no weight'] ] },
+  { n: 'Wall negatives', here: '8 feet-elevated pike push-ups, no full wall rep yet.', test: '3 full-range wall handstand push-ups.', ex: [
+    ['P','*','Wall handstand push-up negative','r3x3',90,'Chest or back to wall. Lower for 5s to the top of the head, come down and kick up again.','Feet-elevated pike push-up negative'],
+    ['P','A','Partial-range wall handstand push-up','r3x5',75,'Lower to a stack of books or a pad and press. Remove height over the weeks.','Feet-elevated pike push-up'],
+    ['P','B','Feet-elevated pike push-up','r3x6',75,'','Pike push-up'],
+    ['P','B','Slow lower to headstand, hold','r3x3',75,'5s hold in a tight headstand with the elbows in.','Wall handstand push-up negative'],
+    ['S','*','Chin-up','r3x5',75,'Paired pull.','Table row','bar'],
+    ['S','*','Scapula push-ups','r2x10',30,'','On the knees'],
+    ['A','*','Shoulder external rotation','r2x8s',20,'','Cuban rotation with no weight'] ] },
+  { n: 'Wall handstand push-up', here: '3 full wall handstand push-ups.', test: '8 wall handstand push-ups, and 5 with a 10cm deficit.', ex: [
+    ['P','*','Wall handstand push-up','r4x3',120,'Stop 1 rep before the grind. Ribs in, no banana back.','Partial-range wall handstand push-up'],
+    ['P','A','Deficit wall handstand push-up negative','r3x3',90,'Hands on blocks or parallettes, head goes below hand level.','Wall handstand push-up negative','pb'],
+    ['P','A','Crow or frog to handstand','r5x1',60,'From a bent-arm balance, press to handstand. The first freestanding pressing pattern.','Crow to headstand and back'],
+    ['P','B','Partial-range freestanding handstand push-up','a10',0,'Collect 10 small reps. Wall close by as a safety.','Wall handstand push-up'],
+    ['P','B','Wall handstand push-up negative, 5s pause at the bottom','r3x3',90,'','Wall handstand push-up negative'],
+    ['S','*','Chin-up','r3x5',75,'','Table row','bar'],
+    ['A','*','Cuban rotation','r2x8',30,'Light weight, slow.','Shoulder external rotation'] ] },
+  { n: 'Freestanding', here: '8 wall handstand push-ups and a 30s freestanding handstand.', test: '5 freestanding handstand push-ups.', ex: [
+    ['P','*','Freestanding handstand push-up','r5x2',120,'Lean forward as you lower, head in front of the hands, press back to the stack.','Partial-range freestanding handstand push-up'],
+    ['P','A','Deficit wall handstand push-up','r3x3',120,'','Wall handstand push-up','pb'],
+    ['P','A','Deficit freestanding negative','r3x2',90,'As slow as you can.','Deficit wall handstand push-up negative','pb'],
+    ['P','B','Wall handstand push-up','r3x5',120,'Volume day.','Wall handstand push-up 3 × 3'],
+    ['P','B','L-sit to shoulder stand on parallettes','r3x3',75,'Bent-arm press from L-sit to a shoulder stand, slow.','Slow lower to headstand, hold','pb'],
+    ['S','*','Pull-up','r3x5',75,'Add weight if 5 is easy.','Table row','bar'],
+    ['A','*','Cuban rotation','r2x8',30,'','Shoulder external rotation'] ] },
+  { n: 'Deficit and 90°', here: '5 freestanding handstand push-ups.', test: 'A 90° handstand push-up, or 5 freestanding deficit reps.', ex: [
+    ['P','*','Deficit freestanding handstand push-up','r5x2',120,'Cluster reps with a short pause at the top.','Freestanding handstand push-up','pb'],
+    ['P','A','Bottom of the 90° push-up, hands raised','h2x10',75,'Bent-arm planche position on blocks. Elbows by the ribs, body level.','Tuck planche hold','pb'],
+    ['P','A','90° handstand push-up negative','r5x1',90,'From handstand lower to the bent-arm planche, as slow as you can.','Deficit freestanding negative','pb'],
+    ['P','B','Bent-arm planche to shoulder stand','r5x2',90,'Rock from the bent-arm planche up to a shoulder stand and back.','L-sit to shoulder stand on parallettes','pb'],
+    ['P','B','90° handstand push-up attempts','t3',90,'One full attempt per set.','90° handstand push-up negative','pb'],
+    ['S','*','Weighted chin-up','r3x4',90,'','Table row, feet elevated','bar'],
+    ['A','*','Cuban rotation','r2x8',30,'','Shoulder external rotation'] ] } ] },
+
+/* ───────────────────────── PLANCHE ───────────────────────── */
+{ id: 'planche', name: 'Planche', short: 'Planche', cat: 'push', order: 4, prep: ['wrist', 'shoulder', 'core'], freq: '2–3 × / week, 48h apart',
+  blurb: 'Straight arms, protracted shoulder blades, hollow body. Add seconds before you add lever length, and give the wrists and elbows time to adapt.',
+  levels: [
+  { n: 'Lean and frog', here: 'You can do 10 push-ups and 6 dips. No tuck planche yet.', test: 'Planche lean 30s, frog stand 30s and a band-assisted tuck planche for 10s.', ex: [
+    ['P','*','Planche lean','h4x15',60,'Push-up position, fingers turned out. Lean the shoulders past the hands, arms locked, upper back round.','Elevated lean, hands on a bench'],
+    ['P','A','Frog stand','h3x20',45,'Knees outside the elbows, lean until the toes float. Then try with straighter arms.','Frog stand with toes down'],
+    ['P','B','Band-assisted tuck planche','h4x6',60,'Band under the hips. Knees tight, hips at shoulder height, arms locked.','Tuck planche with toe assist','band'],
+    ['P','B','Planche walk','r3x4',60,'From a push-up position walk the feet in and lean, hold 2s each rep.','Planche lean'],
+    ['S','*','Pseudo planche push-up','r3x6',90,'Hands by the waist, lean forward and keep the lean through the whole rep.','Lean push-up on the knees'],
+    ['S','*','Scapula push-ups','r3x10',30,'2s hold at the top with the upper back rounded.','On the knees'],
+    ['A','*','Hollow body hold','h3x30',45,'','Tuck hollow hold'] ] },
+  { n: 'Tuck planche', here: 'Band tuck 10s, or a free tuck planche under 10s.', test: 'Tuck planche 15s with locked elbows.', ex: [
+    ['P','*','Tuck planche','h5x8',90,'Hips level with the shoulders, back round, elbows locked. Stop 2s before failure.','Tuck planche with one-toe assist'],
+    ['P','A','Planche lean','h3x20',60,'Deeper lean than last level.','Elevated lean'],
+    ['P','B','Planche slides','r3x4',60,'Feet on a towel or socks. Slide forward into the lean and pull back with straight arms.','Planche walk'],
+    ['S','A','Pseudo planche push-up','r3x8',90,'','Lean push-up'],
+    ['S','B','Straight-arm front raise','r3x8',60,'Dumbbells, plate or band. Arms locked, lift to shoulder height, slow down.','Planche lean pulses','wt'],
+    ['S','*','L-sit, collect time','a60',0,'Shoulders pressed down. Builds the push through the floor.','Tuck L-sit'],
+    ['A','*','Scapula push-ups','r2x10',30,'','On the knees'] ] },
+  { n: 'Advanced tuck', here: 'Tuck planche 15s.', test: 'Advanced tuck 15s and 5 tuck planche push-ups.', ex: [
+    ['P','*','Advanced tuck planche','h5x8',120,'Flatten the back and move the knees away from the chest. Hips stay at shoulder height.','Tuck planche, opening as far as you can'],
+    ['P','A','Tuck to advanced tuck extensions','r3x5',90,'Open and close without the hips dropping.','Tuck planche'],
+    ['P','B','Handstand to tuck planche negative','r4x1',90,'Lower from a handstand with locked arms into the tuck planche and hold 3s.','Tuck planche'],
+    ['S','A','Tuck planche push-up','r3x4',120,'Use a band if you cannot keep the hips up.','Band-assisted tuck planche push-up'],
+    ['S','B','Lean push-up','r3x8',90,'Pseudo planche push-up with the biggest lean you can hold.','Pseudo planche push-up'],
+    ['S','*','Straight-arm front raise','r3x8',60,'','Planche lean 20s','wt'],
+    ['A','*','Hollow rocks','r3x15',45,'','Hollow body hold'] ] },
+  { n: 'Straddle planche', here: 'Advanced tuck 15s.', test: 'Straddle planche 6s.', ex: [
+    ['P','*','Band-assisted straddle planche','h4x10',120,'Legs wide and locked, toes pointed, hips level.','Advanced tuck planche','band'],
+    ['P','A','Straddle planche attempts','h4x3',120,'Jump or lower into it. A slightly high hip is accepted at first.','One-leg planche'],
+    ['P','B','Planche negative from handstand, straddle','r4x1',120,'Lower as slowly as possible through the straddle planche.','Handstand to tuck planche negative'],
+    ['S','A','Advanced tuck planche','h3x12',90,'','Tuck planche'],
+    ['S','B','Advanced tuck planche push-up','r3x4',120,'','Tuck planche push-up'],
+    ['S','*','Lean push-up','r3x10',90,'','Pseudo planche push-up'],
+    ['A','*','Reverse straddle leg lifts','r3x10',45,'Lying face down over a bench or on the floor, lift both straddled legs. Glutes hold the legs up in a planche.','Arch hold 30s'] ] },
+  { n: 'Full planche', here: 'Straddle planche 6s.', test: 'Full planche 3–5s.', ex: [
+    ['P','*','Straddle planche','h4x6',150,'Narrow the straddle a little each week.','Band-assisted straddle planche'],
+    ['P','A','Band-assisted full planche','h3x8',150,'Lightest band that allows a clean line.','Band-assisted straddle planche','band'],
+    ['P','B','Full planche negative from handstand','r4x1',150,'','Planche negative from handstand, straddle'],
+    ['P','B','Full planche attempts','h3x2',150,'','Narrow straddle planche'],
+    ['S','A','Straddle planche push-up negative','r3x2',120,'','Advanced tuck planche push-up'],
+    ['S','B','Advanced tuck planche push-up','r3x5',120,'','Tuck planche push-up'],
+    ['A','*','Reverse straddle leg lifts','r3x10',45,'','Arch hold 30s'] ] } ] },
+
+/* ───────────────────────── FRONT LEVER ───────────────────────── */
+{ id: 'fl', name: 'Front lever', short: 'F. lever', cat: 'pull', order: 5, prep: ['hang', 'shoulder', 'core'], freq: '2–3 × / week',
+  blurb: 'A straight-arm pull that lives in the lats. Shoulders down and back, pelvis tucked, body in one line. Holds first, then raises and pulls.',
+  levels: [
+  { n: 'Foundations', here: 'Fewer than 10 pull-ups, or a tuck lever under 10s.', test: '10 strict pull-ups and a tuck front lever for 10s.', ex: [
+    ['P','*','Pull-up','r4x5',90,'Full hang to chin over the bar.','Leg-assisted pull-up','bar'],
+    ['P','A','Tucked inverted hang','h3x15',60,'Pull the knees to the chest and tip upside down, arms straight.','Hanging knee raise hold','bar'],
+    ['P','A','Active–passive hang','r3x8',45,'Hang relaxed, then pull the shoulders down without bending the arms.','Scapula pull on a low bar','bar'],
+    ['P','B','Tuck front lever attempts','h4x6',75,'Back level with the floor, knees tight, arms locked.','Tucked inverted hang','bar'],
+    ['P','B','Arching scapula pull','r3x5',45,'From a hang, squeeze the shoulder blades and lift the chest to the bar with straight arms.','Active–passive hang','bar'],
+    ['S','*','Bodyweight row','r3x8',60,'','Table row','bar'],
+    ['A','*','Lying leg raise','r3x8',45,'Lower back stays down.','Hollow body hold'] ] },
+  { n: 'Tuck lever', here: '10 pull-ups and a 10s tuck lever.', test: 'Tuck front lever 30s, or advanced tuck 10s.', ex: [
+    ['P','*','Tuck front lever','h5x10',90,'','Tuck front lever attempts','bar'],
+    ['P','A','Tuck front lever raise','r3x5',90,'From a hang, lift with straight arms to the tuck lever and lower under control.','Negative tuck lever raise','bar'],
+    ['P','B','Negative from inverted, tuck','r3x3',90,'Start upside down and lower through the lever for 5s.','Tucked inverted hang','bar'],
+    ['P','B','Tuck skin the cat','r2x3',60,'Rotate through to a German hang and back. Opens the shoulders for all lever work.','Tucked inverted hang','bar'],
+    ['S','*','Pull-up','r3x8',90,'Add weight when 8 is easy.','Bodyweight row','bar'],
+    ['S','*','Tuck dragon flag','r3x6',60,'Only the shoulder blades touch the bench. Lower slowly.','Lying leg raise'],
+    ['A','*','Lat stretch on the bar','h2x30',20,'Passive hang, let the ribs drop.','Child pose side stretch'] ] },
+  { n: 'Advanced tuck and one leg', here: 'Advanced tuck front lever 10s.', test: 'One-leg lever 10s each side, or a straddle lever for 5s.', ex: [
+    ['P','*','Advanced tuck front lever','h5x10',120,'Flat back, hips at shoulder height, thighs vertical.','Tuck front lever','bar'],
+    ['P','A','One-leg front lever','h4x6s',90,'One leg long, one tucked. Swap sides each set.','Advanced tuck front lever','bar'],
+    ['P','B','Advanced tuck lever raise','r3x5',120,'','Tuck front lever raise','bar'],
+    ['P','B','One-leg lever negative','r3x2s',90,'From inverted, 5s down.','Negative from inverted, tuck','bar'],
+    ['S','A','Tuck front lever pull-up','r3x5',120,'Hold the tuck lever and row the hips to the bar.','Bodyweight row, feet elevated','bar'],
+    ['S','B','Weighted pull-up','r4x5',120,'','Pull-up','bar'],
+    ['A','*','Dragon flag negative','r3x4',60,'','Tuck dragon flag'] ] },
+  { n: 'Straddle to full', here: 'One-leg lever 10s.', test: 'Full front lever 5s.', ex: [
+    ['P','*','Straddle front lever','h5x6',150,'','One-leg front lever','bar'],
+    ['P','A','Full front lever negative','r4x1',120,'From inverted, 5–8s down, fight hardest near horizontal.','One-leg lever negative','bar'],
+    ['P','B','Band-assisted full front lever','h3x8',120,'Band under the hips or feet.','Straddle front lever','bar'],
+    ['S','A','Advanced tuck front lever row','r4x5',120,'','Tuck front lever pull-up','bar'],
+    ['S','B','Ice cream makers','r3x5',120,'From the top of a pull-up, drop back to a lever shape and pull back up.','Tuck front lever raise','bar'],
+    ['S','*','Weighted pull-up','r3x5',120,'','Pull-up','bar'],
+    ['A','*','Dragon flag','r3x5',60,'','Dragon flag negative'] ] },
+  { n: 'Full lever and pulls', here: 'Full front lever 5s.', test: 'Full front lever 10s and 5 front lever raises.', ex: [
+    ['P','*','Full front lever','h5x6',150,'','Straddle front lever','bar'],
+    ['P','A','Front lever raise','r3x3',150,'Hang to full lever with straight arms.','Advanced tuck lever raise','bar'],
+    ['P','B','Front lever pull-up, straddle','r3x3',150,'','Advanced tuck front lever row','bar'],
+    ['P','B','Lever combination','t4',120,'Raise, hold 3s, lower to straddle, hold 3s. One combination per attempt.','Full front lever negative','bar'],
+    ['S','*','Ice cream makers','r3x5',120,'','Tuck front lever raise','bar'],
+    ['S','*','Weighted pull-up','r3x4',150,'','Pull-up','bar'],
+    ['A','*','Dragon flag','r3x6',60,'','Dragon flag negative'] ] } ] },
+
+/* ───────────────────────── ONE-ARM PULL-UP ───────────────────────── */
+{ id: 'oap', name: 'One-arm pull-up', short: 'OAP', cat: 'pull', order: 8, prep: ['hang', 'shoulder'], freq: '2 × / week, 48–72h apart',
+  blurb: 'Heavy on the elbows. Low reps, long rests, never to failure, and back off at the first sign of inner-elbow pain.',
+  levels: [
+  { n: 'Pulling base', here: 'Fewer than 12 pull-ups.', test: '12 strict pull-ups and one pull-up with 25% of your bodyweight added.', ex: [
+    ['P','*','Pull-up','r4x6',90,'','Leg-assisted pull-up','bar'],
+    ['P','A','Chin-up','r3x6',90,'','Negative chin-up','bar'],
+    ['P','A','Chin-up 90° hold','h3x10',75,'Stop with the elbows at a right angle.','Top hold, chin over the bar','bar'],
+    ['P','B','Chest-to-bar pull-up','r3x4',90,'','Pull-up','bar'],
+    ['P','B','Pull-up top hold','h3x12',75,'','Flexed-arm hang with the feet light on a box','bar'],
+    ['S','*','Bodyweight row','r3x10',60,'','Table row','bar'],
+    ['A','*','Passive hang','h2x45',30,'','Hang with the toes on the floor','bar'] ] },
+  { n: 'Archer', here: '12 pull-ups and +25% bodyweight for 1.', test: '5 archer pull-ups each side and a 30s one-arm hang each side.', ex: [
+    ['P','*','Archer pull-up','r4x3s',120,'Pull to one hand while the other arm stays straight along the bar.','Typewriter pull-up','bar'],
+    ['P','A','Weighted pull-up','r4x4',150,'','Pull-up, 3s lowering','bar'],
+    ['P','B','Typewriter pull-up','r3x3s',120,'At the top, travel from hand to hand.','Archer pull-up','bar'],
+    ['P','B','One-arm hang','h3x15s',60,'Shoulder pulled down, not hanging on the joint.','Two-finger assisted one-arm hang','bar'],
+    ['S','*','Top hold with one arm, other hand on the wrist','h3x10s',75,'','Pull-up top hold','bar'],
+    ['S','*','Archer row','r3x8s',60,'','Bodyweight row','bar'],
+    ['A','*','Forearm and biceps stretch','h2x30',20,'Palms on the floor, fingers pointing to the knees.','Passive hang'] ] },
+  { n: 'Assisted one arm', here: '5 archer pull-ups each side.', test: '3 one-arm pull-ups with the lightest band and a 10s one-arm negative.', ex: [
+    ['P','*','Band-assisted one-arm pull-up','r4x3s',150,'Band in the free hand, as low as you can hold it.','Archer pull-up','bar'],
+    ['P','A','One-arm negative','r3x2s',150,'Start at the top, 5s down. Skip it on any elbow twinge.','Archer pull-up negative','bar'],
+    ['P','B','One-arm top hold','h3x10s',90,'','Top hold with one arm, other hand on the wrist','bar'],
+    ['P','B','One-arm 90° hold','h3x5s',90,'','One-arm top hold','bar'],
+    ['S','*','Weighted pull-up','r3x3',150,'','Pull-up','bar'],
+    ['S','*','One-arm scapula pull','r3x5s',60,'From a one-arm hang, pull the shoulder down and release.','Active–passive hang','bar'],
+    ['A','*','Forearm and biceps stretch','h2x30',20,'','Passive hang'] ] },
+  { n: 'First rep', here: '3 reps with the lightest band, 10s negative.', test: 'One strict one-arm pull-up on each arm.', ex: [
+    ['P','*','One-arm negative, 8–10s','r4x1s',180,'','Band-assisted one-arm pull-up','bar'],
+    ['P','A','One-arm pull-up attempts','t6',180,'3 per side. From a dead hang, no kip. If it does not move, stop.','Band-assisted one-arm pull-up','bar'],
+    ['P','B','Band-assisted one-arm pull-up, lightest band','r3x2s',150,'','Archer pull-up','bar'],
+    ['P','B','One-arm 90° hold','h3x8s',90,'','One-arm top hold','bar'],
+    ['S','*','Weighted pull-up','r3x3',150,'','Pull-up','bar'],
+    ['A','*','One-arm hang','h2x30s',45,'','Passive hang','bar'] ] },
+  { n: 'Reps', here: 'One strict one-arm pull-up each arm.', test: '3 strict one-arm pull-ups each arm.', ex: [
+    ['P','*','One-arm pull-up singles','r5x1s',180,'','One-arm negative, 8–10s','bar'],
+    ['P','A','One-arm pull-up doubles','t4',180,'2 attempts per side.','One-arm pull-up singles','bar'],
+    ['P','B','Weighted one-arm negative','r3x1s',180,'Small weight only.','One-arm negative, 8–10s','bar'],
+    ['S','*','Weighted pull-up','r3x3',150,'','Pull-up','bar'],
+    ['S','*','One-arm 90° hold','h3x10s',90,'','One-arm top hold','bar'],
+    ['A','*','One-arm hang','h2x30s',45,'','Passive hang','bar'] ] } ] },
+
+/* ───────────────────────── MUSCLE-UP ───────────────────────── */
+{ id: 'mu', name: 'Bar muscle-up', short: 'M-up', cat: 'pull', order: 9, prep: ['hang', 'shoulder', 'wrist'], freq: '2 × / week',
+  blurb: 'A high explosive pull, a fast turnover and a straight-bar dip. Built for a bar, so no rings are needed.',
+  levels: [
+  { n: 'Pull high', here: 'Pull-ups reach the chin, not the chest.', test: '8 chest-to-bar pull-ups and 10 straight-bar dips.', ex: [
+    ['P','*','Chest-to-bar pull-up','r4x4',120,'Pull the elbows down and back until the lower chest meets the bar.','Pull-up with a 2s top hold','bar'],
+    ['P','A','Straight-bar dip','r3x8',90,'On top of the bar. Lean over it, elbows back, lock out.','Dip','bar'],
+    ['P','B','Explosive pull-up','r4x3',120,'Pull as fast as you can and let go for an instant at the top.','Chest-to-bar pull-up','bar'],
+    ['P','B','Straight-bar support hold','h3x20',60,'Arms locked, shoulders down, bar at the hips.','Dip support hold','bar'],
+    ['S','*','L-sit pull-up','r3x5',90,'','Pull-up','bar'],
+    ['S','*','Dip','r3x8',90,'','Bench dip','dip'],
+    ['A','*','Hanging knee raise','r3x10',45,'','Lying leg raise','bar'] ] },
+  { n: 'Transition', here: '8 chest-to-bar pull-ups, no muscle-up.', test: 'One bar muscle-up, small kip allowed.', ex: [
+    ['P','*','Band-assisted muscle-up','r4x3',120,'Band under the feet. Pull to the hips, throw the chest over the bar.','Jumping muscle-up from a low bar','band'],
+    ['P','A','Muscle-up negative','r4x2',120,'From the support, lower through the transition as slowly as possible.','Straight-bar dip, deep','bar'],
+    ['P','B','Jumping muscle-up from a low bar','r3x4',90,'Use the legs less each week.','Band-assisted muscle-up','bar'],
+    ['P','B','Explosive pull to the sternum','r4x3',120,'','Explosive pull-up','bar'],
+    ['S','*','Straight-bar dip','r3x8',90,'','Dip','bar'],
+    ['S','*','Chest-to-bar pull-up','r3x5',120,'','Pull-up','bar'],
+    ['A','*','Hanging leg raise','r3x8',45,'','Hanging knee raise','bar'] ] },
+  { n: 'Clean muscle-up', here: 'One muscle-up with a kip.', test: '3 muscle-ups in a row with a minimal kip.', ex: [
+    ['P','*','Muscle-up singles','r5x1',150,'Both elbows come over together. No chicken wing.','Band-assisted muscle-up','bar'],
+    ['P','A','Muscle-up negative, slow','r3x2',120,'','Straight-bar dip, deep','bar'],
+    ['P','B','Explosive pull to the hips','r4x3',120,'','Explosive pull to the sternum','bar'],
+    ['S','*','Straight-bar dip','r3x10',90,'','Dip','bar'],
+    ['S','*','Weighted pull-up','r3x5',120,'','Pull-up','bar'],
+    ['A','*','Hanging leg raise','r3x10',45,'','Hanging knee raise','bar'] ] },
+  { n: 'Strict', here: '3 muscle-ups in a row.', test: '5 strict muscle-ups from a dead hang.', ex: [
+    ['P','*','Strict muscle-up','r5x2',150,'Dead hang start, no swing.','Muscle-up singles','bar'],
+    ['P','A','Muscle-up negative, 5s transition','r3x2',120,'','Muscle-up negative','bar'],
+    ['P','B','Muscle-up sets','r3x3',150,'','Muscle-up singles','bar'],
+    ['S','*','Weighted chest-to-bar pull-up','r3x4',150,'','Chest-to-bar pull-up','bar'],
+    ['S','*','Weighted dip','r3x6',120,'','Straight-bar dip','dip'],
+    ['A','*','Toes to bar','r3x8',45,'','Hanging leg raise','bar'] ] },
+  { n: 'Slow and weighted', here: '5 strict muscle-ups.', test: 'One slow muscle-up with no momentum, or 8 strict reps.', ex: [
+    ['P','*','Strict muscle-up','r4x4',150,'','Muscle-up sets','bar'],
+    ['P','A','Slow muscle-up attempts','t4',150,'Pull high and roll the wrists over without any speed.','Muscle-up negative, 5s transition','bar'],
+    ['P','B','Weighted muscle-up','r4x2',180,'','Strict muscle-up','bar'],
+    ['S','*','Weighted chest-to-bar pull-up','r3x4',150,'','Chest-to-bar pull-up','bar'],
+    ['S','*','Weighted dip','r3x6',120,'','Straight-bar dip','dip'],
+    ['A','*','Toes to bar','r3x10',45,'','Hanging leg raise','bar'] ] } ] },
+
+/* ───────────────────────── L-SIT / V-SIT ───────────────────────── */
+{ id: 'lsit', name: 'L-sit to V-sit', short: 'L / V-sit', cat: 'core', order: 10, prep: ['wrist', 'hips', 'core'], freq: '3–4 × / week',
+  blurb: 'Compression strength: the same engine as the press to handstand. Push the floor away and keep the knees locked.',
+  levels: [
+  { n: 'Tuck support', here: 'L-sit under 10s.', test: 'L-sit 10s with locked knees.', ex: [
+    ['P','*','Tuck L-sit','h4x12',60,'On blocks, parallettes or the floor. Shoulders down, knees above the hips.','Foot-assisted tuck support'],
+    ['P','A','One-leg L-sit','h3x8s',60,'One leg long, one tucked.','Tuck L-sit'],
+    ['P','B','L-sit attempts','h4x5',60,'','One-leg L-sit'],
+    ['S','*','Seated pike leg lifts','r3x10',45,'','One leg at a time'],
+    ['S','*','Support shrugs','r3x10',30,'In the support position, let the shoulders rise and push them down hard.','Seated push-downs on the floor'],
+    ['A','*','Pike stretch','h2x45',20,'','Standing forward fold'] ] },
+  { n: 'L-sit', here: 'L-sit 10s.', test: 'L-sit 30s.', ex: [
+    ['P','*','L-sit','h5x10',60,'','Tuck L-sit'],
+    ['P','A','L-sit, collect time','a60',0,'','L-sit'],
+    ['P','B','L-sit to tuck and back','r3x6',60,'','Tuck L-sit'],
+    ['S','*','Seated pike leg lifts, hands by the knees','r3x12',45,'','Seated pike leg lifts'],
+    ['S','*','Hanging leg raise','r3x8',60,'','Lying leg raise','bar'],
+    ['A','*','Pike stretch','h2x60',20,'','Standing forward fold'] ] },
+  { n: 'Straddle L and high L', here: 'L-sit 30s.', test: 'Straddle L-sit 15s and L-sit 45s.', ex: [
+    ['P','*','Straddle L-sit','h4x10',75,'Hands between the legs.','One-leg straddle L-sit'],
+    ['P','A','High L-sit raises','r3x5',75,'From the L-sit, lift the feet above the hips and return.','L-sit'],
+    ['P','B','L-sit','h3x20',75,'','L-sit 3 × 10s'],
+    ['S','*','Toes to bar','r3x6',60,'','Lying leg raise','bar'],
+    ['S','*','Seated straddle leg lifts','r3x10',45,'','One leg at a time'],
+    ['A','*','Pancake stretch','h2x60',20,'','Seated straddle stretch'] ] },
+  { n: 'V-sit', here: 'Straddle L 15s, L-sit 45s.', test: 'V-sit 10s with the feet at eye level.', ex: [
+    ['P','*','V-sit attempts','h5x4',90,'Lean back slightly, push the hips forward between the arms, feet climb.','High L-sit raises'],
+    ['P','A','L-sit to V-sit pulses','r3x5',90,'','High L-sit raises'],
+    ['P','B','Straddle L-sit','h3x15',75,'','Straddle L-sit 10s'],
+    ['S','*','Seated pike leg lifts, hands past the knees','r3x10',45,'','Seated pike leg lifts'],
+    ['S','*','Reverse plank shoulder extension','h3x20',45,'Hands behind you, fingers back, hips high. Manna and V-sit need this range.','Table top hold'],
+    ['A','*','Pike stretch','h2x60',20,'','Jefferson curl'] ] },
+  { n: 'High V-sit', here: 'V-sit 10s.', test: 'V-sit 20s, or the first manna lift.', ex: [
+    ['P','*','V-sit','h5x8',90,'','V-sit attempts'],
+    ['P','A','Middle split hold, hips lifted','h4x5',90,'Sit in a straddle, hands behind the hips, lift the seat and push the hips forward.','Reverse plank shoulder extension'],
+    ['P','B','V-sit to straddle L transitions','r3x4',90,'','L-sit to V-sit pulses'],
+    ['S','*','Toes to bar, slow','r3x8',60,'','Lying leg raise','bar'],
+    ['S','*','Reverse plank shoulder extension','h3x30',45,'','Table top hold'],
+    ['A','*','Pancake stretch','h2x60',20,'','Seated straddle stretch'] ] } ] },
+
+/* ───────────────────────── BACK LEVER ───────────────────────── */
+{ id: 'bl', name: 'Back lever', short: 'B. lever', cat: 'pull', order: 6, prep: ['hang', 'shoulder'], freq: '2 × / week',
+  blurb: 'Usually the first lever people get. It loads the biceps tendon in a long position, so start with the palms facing down and add time slowly.',
+  levels: [
+  { n: 'German hang', here: 'New to skin the cat.', test: 'German hang 30s and a tuck back lever for 15s.', ex: [
+    ['P','*','Tuck skin the cat','r3x3',75,'Rotate through between the arms, lower the feet toward the floor, come back the same way.','Tucked inverted hang','bar'],
+    ['P','A','German hang','h3x15',60,'Only as deep as you could hold a conversation.','German hang with the feet on the floor','bar'],
+    ['P','B','Tuck back lever','h4x8',75,'Back level with the floor, knees tight, arms locked.','German hang','bar'],
+    ['S','*','Active–passive hang','r3x8',45,'','Scapula pull on a low bar','bar'],
+    ['S','*','Reverse table top','r3x8',30,'Hands behind you, lift the hips, open the chest.','Table top hold'],
+    ['A','*','Shoulder extension stretch','h2x30',20,'Hands on a bench behind you, sink the hips.','Hands clasped behind the back'] ] },
+  { n: 'Advanced tuck', here: 'Tuck back lever 15s.', test: 'Advanced tuck back lever 15s.', ex: [
+    ['P','*','Advanced tuck back lever','h5x8',90,'Flat back, knees away from the chest.','Tuck back lever','bar'],
+    ['P','A','Tuck back lever raise','r3x4',90,'From a German hang, pull with straight arms to the tuck lever.','Tuck skin the cat','bar'],
+    ['P','B','Skin the cat','r3x3',75,'Legs straighter than last level.','Tuck skin the cat','bar'],
+    ['S','*','German hang','h3x20',60,'','German hang with the feet on the floor','bar'],
+    ['S','*','Reverse leg raise','r3x8',45,'Lying face down, lift both legs with the glutes.','Arch hold'],
+    ['A','*','Shoulder extension stretch','h2x30',20,'','Hands clasped behind the back'] ] },
+  { n: 'One leg and straddle', here: 'Advanced tuck 15s.', test: 'Straddle back lever 10s.', ex: [
+    ['P','*','Straddle back lever','h5x6',120,'','One-leg back lever','bar'],
+    ['P','A','One-leg back lever','h4x6s',90,'','Advanced tuck back lever','bar'],
+    ['P','B','Back lever negative from inverted','r3x2',120,'5s down to horizontal, hold 2s.','Tuck back lever raise','bar'],
+    ['S','*','Skin the cat','r3x3',75,'','Tuck skin the cat','bar'],
+    ['S','*','Arch hold','h3x30',45,'','Reverse leg raise'],
+    ['A','*','Shoulder extension stretch','h2x30',20,'','Hands clasped behind the back'] ] },
+  { n: 'Full back lever', here: 'Straddle back lever 10s.', test: 'Full back lever 10s.', ex: [
+    ['P','*','Full back lever','h5x5',150,'Legs together, glutes on, body in one line.','Straddle back lever','bar'],
+    ['P','A','Back lever negative from inverted','r3x2',120,'','One-leg back lever','bar'],
+    ['P','B','Straddle back lever','h3x10',120,'','One-leg back lever','bar'],
+    ['S','*','Back lever raise, tuck to straddle','r3x4',120,'','Tuck back lever raise','bar'],
+    ['S','*','Arch hold','h3x40',45,'','Reverse leg raise'],
+    ['A','*','German hang','h2x30',45,'','Shoulder extension stretch','bar'] ] },
+  { n: 'Pull-outs', here: 'Full back lever 10s.', test: 'Full back lever 15s and 3 pull-outs to inverted.', ex: [
+    ['P','*','Full back lever','h4x10',150,'','Straddle back lever','bar'],
+    ['P','A','Back lever pull-out','r3x3',150,'From the lever, pull with straight arms back to an inverted hang.','Back lever raise, tuck to straddle','bar'],
+    ['P','B','German hang pull-out','r3x3',120,'From the German hang to inverted with the body straight.','Skin the cat','bar'],
+    ['S','*','Skin the cat, straight body','r3x3',90,'','Skin the cat','bar'],
+    ['S','*','Arch hold','h3x45',45,'','Reverse leg raise'],
+    ['A','*','German hang','h2x30',45,'','Shoulder extension stretch','bar'] ] } ] },
+
+/* ───────────────────────── HUMAN FLAG ───────────────────────── */
+{ id: 'flag', name: 'Human flag', short: 'Flag', cat: 'pull', order: 11, prep: ['hang', 'shoulder', 'core'], freq: '2 × / week',
+  blurb: 'A push with the bottom arm and a pull with the top arm at the same time. Needs a vertical pole, a ladder or wall bars. Train both sides.',
+  levels: [
+  { n: 'Low tuck', here: 'New to the flag.', test: 'Low tuck flag 10s each side.', ex: [
+    ['P','*','Low tuck flag hold','h4x6s',75,'Bottom arm locked and pushing, top arm pulling. Knees tucked, hips below the shoulders.','Vertical flag hold, feet above the head','pole'],
+    ['P','A','Vertical flag hold','h3x10s',75,'Kick up so the body is upside down along the pole and hold.','Side plank with the top leg raised','pole'],
+    ['P','B','Flag kick-ups','r3x4s',75,'Kick to the vertical position and lower with control.','Low tuck flag hold','pole'],
+    ['S','*','Side plank, top leg raised','h3x30s',45,'','Side plank'],
+    ['S','*','Passive hang','h2x45',30,'','Child pose side stretch','bar'],
+    ['A','*','Standing side stretch','h2x30s',20,'','Child pose side stretch'] ] },
+  { n: 'Tuck flag', here: 'Low tuck flag 10s.', test: 'Tuck flag at shoulder height 10s each side.', ex: [
+    ['P','*','Tuck flag hold','h4x6s',90,'Hips at shoulder height.','Low tuck flag hold','pole'],
+    ['P','A','Flag negative from vertical, tuck','r3x2s',90,'Lower from vertical to the tuck flag in 5s.','Vertical flag hold','pole'],
+    ['P','B','Band-assisted straddle flag','h3x6s',90,'Band from the top hand to the hips.','Tuck flag hold','pole'],
+    ['S','*','Side plank, top leg raised','h3x40s',45,'','Side plank'],
+    ['S','*','Pull-up','r3x6',90,'','Table row','bar'],
+    ['A','*','Standing side stretch','h2x30s',20,'','Child pose side stretch'] ] },
+  { n: 'One leg and straddle', here: 'Tuck flag 10s.', test: 'Straddle flag 6s each side.', ex: [
+    ['P','*','Straddle flag hold','h4x4s',120,'','One-leg flag hold','pole'],
+    ['P','A','One-leg flag hold','h3x6s',90,'','Tuck flag hold','pole'],
+    ['P','B','Flag negative from vertical, straddle','r3x2s',120,'','Flag negative from vertical, tuck','pole'],
+    ['S','*','Side-lying leg raise on a bench','r3x10s',45,'','Side plank, top leg raised'],
+    ['S','*','Feet-elevated pike push-up','r3x6',75,'The bottom arm is an overhead press.','Pike push-up'],
+    ['A','*','Standing side stretch','h2x30s',20,'','Child pose side stretch'] ] },
+  { n: 'Full flag', here: 'Straddle flag 6s.', test: 'Full flag 5s each side.', ex: [
+    ['P','*','Full flag attempts','h4x3s',150,'','Straddle flag hold','pole'],
+    ['P','A','Straddle flag hold','h3x8s',120,'','One-leg flag hold','pole'],
+    ['P','B','Full flag negative from vertical','r3x2s',120,'','Flag negative from vertical, straddle','pole'],
+    ['S','*','Side-lying leg raise on a bench','r3x12s',45,'','Side plank, top leg raised'],
+    ['S','*','Weighted pull-up','r3x5',120,'','Table row, feet elevated','bar'],
+    ['A','*','Standing side stretch','h2x30s',20,'','Child pose side stretch'] ] },
+  { n: 'Flag strength', here: 'Full flag 5s.', test: 'Full flag 10s each side and 3 flag raises.', ex: [
+    ['P','*','Full flag hold','h4x6s',150,'','Straddle flag hold','pole'],
+    ['P','A','Flag raise','r3x3s',150,'From hanging along the pole, lift to the flag.','Full flag negative from vertical','pole'],
+    ['P','B','Flag leg switches','r3x4s',120,'Straddle to legs together and back.','Straddle flag hold','pole'],
+    ['S','*','Side-lying leg raise on a bench','r3x12s',45,'','Side plank, top leg raised'],
+    ['S','*','Weighted pull-up','r3x5',120,'','Table row, feet elevated','bar'],
+    ['A','*','Standing side stretch','h2x30s',20,'','Child pose side stretch'] ] } ] },
+
+/* ───────────────────────── PISTOL SQUAT ───────────────────────── */
+{ id: 'pistol', name: 'Pistol squat', short: 'Pistol', cat: 'legs', order: 12, prep: ['legs', 'hips'], freq: '2 × / week',
+  blurb: 'Single-leg strength, ankle range and balance. The bodyweight answer to leg day, with shrimp and dragon variations at the top.',
+  levels: [
+  { n: 'Assisted', here: 'You cannot sit down to a low box on one leg.', test: '8 one-leg box squats to knee height each leg.', ex: [
+    ['P','*','Assisted pistol, hand on a support','r4x5s',75,'Hold a post or door frame. Use the hand as little as possible.','One-leg box squat to a chair'],
+    ['P','A','One-leg box squat','r3x6s',75,'Sit back to a box, touch and stand without rocking.','Split squat'],
+    ['P','B','Pistol negative to the floor','r3x3s',75,'5s down on one leg, stand up with two.','One-leg box squat'],
+    ['S','*','Split squat, back foot elevated','r3x8s',75,'','Split squat'],
+    ['S','*','Deep squat hold','h2x60',30,'Heels down, chest up.','Heels on a small wedge'],
+    ['A','*','Ankle rocks, knee over toe','r2x10s',20,'','Calf stretch on a step'] ] },
+  { n: 'Low box', here: '8 one-leg box squats at knee height.', test: '3 pistols each leg with a counterweight.', ex: [
+    ['P','*','One-leg squat to a low box','r4x5s',90,'','One-leg box squat'],
+    ['P','A','Counterweight pistol','r3x3s',90,'Hold a small weight in front of you. It makes balance easier.','Assisted pistol, hand on a support','wt'],
+    ['P','B','Pistol negative, 5s','r3x3s',90,'','Pistol negative to the floor'],
+    ['S','*','Shrimp squat, hands free','r3x5s',75,'Back knee touches the floor behind you.','Reverse lunge'],
+    ['S','*','Seated pike leg lifts','r3x10',45,'The front leg has to stay up.','One leg at a time'],
+    ['A','*','Ankle rocks, knee over toe','r2x10s',20,'','Calf stretch on a step'] ] },
+  { n: 'Pistol', here: '3 counterweight pistols.', test: '5 clean pistols each leg.', ex: [
+    ['P','*','Pistol squat','r4x3s',120,'Heel down, knee tracks over the toes, free leg locked.','Counterweight pistol'],
+    ['P','A','Pistol with a 2s pause at the bottom','r3x2s',120,'','Pistol negative, 5s'],
+    ['P','B','Shrimp squat','r3x5s',90,'','Reverse lunge'],
+    ['S','*','Nordic curl negative','r3x4',90,'Feet anchored. Lower as slowly as you can.','Hamstring bridge, one leg'],
+    ['S','*','Single-leg calf raise','r3x12s',45,'','Calf raise'],
+    ['A','*','Couch stretch','h2x45s',20,'','Kneeling hip flexor stretch'] ] },
+  { n: 'Weighted and shrimp', here: '5 pistols each leg.', test: '5 pistols with 10kg, and 5 shrimp squats holding the back foot.', ex: [
+    ['P','*','Weighted pistol','r4x3s',120,'','Pistol squat','wt'],
+    ['P','A','Shrimp squat, holding the back foot','r3x4s',90,'','Shrimp squat'],
+    ['P','B','Pistol squat, sets of 5','r3x5s',120,'','Pistol squat'],
+    ['S','*','Nordic curl negative','r3x5',90,'','Hamstring bridge, one leg'],
+    ['S','*','Sissy squat','r3x8',60,'Hold a support. Knees travel forward, hips stay open.','Reverse step-up'],
+    ['A','*','Couch stretch','h2x45s',20,'','Kneeling hip flexor stretch'] ] },
+  { n: 'Dragon and advanced', here: 'Weighted pistol ×5 and the advanced shrimp.', test: '3 dragon pistols each leg.', ex: [
+    ['P','*','Dragon pistol','r4x2s',120,'The free leg threads behind and across the standing leg.','Elevated dragon pistol on a box'],
+    ['P','A','Advanced shrimp squat, both hands on the back foot','r3x3s',120,'','Shrimp squat, holding the back foot'],
+    ['P','B','Weighted pistol','r3x4s',120,'','Pistol squat','wt'],
+    ['S','*','Nordic curl','r3x3',120,'','Nordic curl negative'],
+    ['S','*','Pistol jump','r3x3s',90,'','Pistol squat'],
+    ['A','*','Couch stretch','h2x45s',20,'','Kneeling hip flexor stretch'] ] } ] }
+];
+
+/* Warm-up pieces, picked by what the chosen skills load. First item of each tag is used in short sessions. */
+const PREP = {
+  wrist: [
+    ['Wrist circles and rocks', 'h1x60', 'On all fours: circles, then rock forward and back with fingers forward, sideways and backward.'],
+    ['Fingertip and knuckle push-offs', 'r1x8', 'Kneeling, palms flat. Lift the heels of the hands, then the knuckles. Slow.'],
+    ['Back-of-hand wrist stretch', 'h1x30', 'Backs of the hands on the floor, fingers toward the knees, light pressure.'] ],
+  shoulder: [
+    ['Scapula push-ups', 'r1x10', 'Arms locked, move only the shoulder blades.'],
+    ['Shoulder dislocates with a band or towel', 'r1x10', 'Wide grip, arms straight, over the head and behind.'],
+    ['Downward dog', 'h1x45', 'Push the chest toward the thighs, shoulders open.'] ],
+  hang: [
+    ['Active–passive hang', 'r1x10', 'Hang, pull the shoulders down, release. Arms stay straight.'],
+    ['Passive hang', 'h1x30', 'Let the body lengthen.'] ],
+  hips: [
+    ['Deep squat with forward fold', 'h1x60', 'Sit in the squat 5s, straighten the legs into a fold 5s, repeat.'],
+    ['Standing straddle good morning', 'r1x8', 'Long spine, hinge to level.'] ],
+  core: [
+    ['Hollow body hold', 'h1x30', 'Lower back down, ribs in.'] ],
+  legs: [
+    ['Knee circles and ankle rocks', 'h1x60', 'Both directions, then drive each knee over the toes.'],
+    ['Cossack squat', 'r1x6s', 'Side to side, heel down.'] ]
+};
+const COOL = {
+  wrist: ['Forearm stretch, palms then backs of hands', 'h1x60', 'Kneeling, fingers pointing to the knees.'],
+  shoulder: ['Chest and shoulder stretch on the wall', 'h1x45s', 'Arm at shoulder height on the wall, turn away.'],
+  hang: ['Lat stretch', 'h1x45s', 'Hold a post, sit the hips back and to the side.'],
+  hips: ['Pancake or pike stretch', 'h1x90', 'Relax into it, long exhales.'],
+  legs: ['Couch stretch', 'h1x45s', 'Back knee on the floor against a wall, hips forward.'],
+  core: ['Cobra stretch', 'h1x45', 'Hips down, chest up.']
+};
+
+const SOURCES = [
+  ['Paul Twyman', 'Level-by-level session structure for the handstand, one-arm handstand, handstand push-up, 90° push-up, press and planche-with-lever work, and the habit of pairing each skill with a stretch.'],
+  ['Yuval on Hands', 'Wall-to-free handstand drills, shape transitions and the fingertip ("piano") route toward the one-arm handstand.'],
+  ['Sondre Berg', 'Straight-arm and bent-arm strength sessions, collecting time on a hold, and the pull sessions for the front lever, muscle-up and one-arm pull-up.'],
+  ['Coach Dan (gymnastics)', 'Press-to-handstand stages from mobility to full presses, and the beginner, intermediate and advanced planche weeks.'],
+  ['Nedko', 'Target-based planche levels and the strength, power and volume phases for the one-arm pull-up.'],
+  ['Cali Aesthetix', 'Five-stage planche path from leans to the full planche.'],
+  ['Planche Pro', 'Separating straight-arm days from bent-arm days.'],
+  ['Flolit / Davai Calisthenics', 'Front lever stages, from pull-up base to tuck, advanced tuck, one leg and full.'],
+  ['Pamela Gagnon', 'Four-week handstand plan: wall holds, shifts and frog stand as balance practice.'],
+  ['Mayhem gymnastics cycle', 'Scaled handstand push-up progression with slow descents.'],
+  ['Movement Athlete manuals', 'Your own manuals and encyclopedia chapters on hand balancing, planche, front lever, pulling and pushing skills.'],
+  ['Also behind the method', 'Ido Portal, Roye Gold, Tom Merrick, Dylan Werner, The Knees Over Toes Guy and Michael Eckert, whose work shaped the Project Mastery programs this app grows out of.']
+];
+
+/* Prehab and rehab. Row: [name, dose, restSec, cue, swap, needs]
+   pre  = keep a healthy joint strong (prevention)
+   calm = rehab stage 1: settle a niggle with gentle range and isometrics
+   build = rehab stage 2: load it again, slowly                        */
+const CARE = [
+{ id: 'wrist', name: 'Wrists & forearms', for: 'Handstands, planche, presses, L-sits',
+  pre: [
+    ['Wrist circles and rocks', 'h1x60', 10, 'On all fours: circles both ways, then rock forward and back with fingers forward, sideways and backward.', ''],
+    ['Fingertip and knuckle push-offs', 'r2x10', 30, 'Kneeling, palms flat. Lift the heels of the hands, then the knuckles, so only the fingertips stay down. Slow.', 'Fingertip push-offs, one hand at a time'],
+    ['Back-of-hand push-ups on the knees', 'r2x8', 30, 'Backs of the hands on the floor, fingers toward you. Small range, no pain.', 'Back-of-hand wrist stretch 30s'],
+    ['Wrist curls, light', 'r2x15', 30, 'Forearm on your thigh, palm up. Slow up, slower down.', 'Band wrist curls', 'wt'],
+    ['Reverse wrist curls, light', 'r2x15', 30, 'Palm down. Lower for 3 seconds.', 'Band reverse wrist curls', 'wt'],
+    ['Finger extensions against a rubber band', 'r2x20', 20, 'Band around the fingertips, open the hand wide.', 'Spread the fingers wide against the other hand'],
+    ['Kneeling wrist extension stretch', 'h2x30', 15, 'Palms down, fingers forward, lean the shoulders over the hands until you feel a stretch.', ''] ],
+  calm: [
+    ['Gentle wrist circles', 'h2x45', 15, 'Slow, pain-free range only.', ''],
+    ['Wrist isometric holds', 'h4x20', 20, 'Press the hand gently into your other hand, one hold each way: up, down, thumb side, little-finger side. About half effort.', ''],
+    ['Finger tendon glides', 'r2x10', 20, 'Straight hand, hook fist, full fist, flat fist. Move slowly through each.', ''],
+    ['Prayer stretch, light', 'h2x20', 15, 'Palms together in front of the chest, lower the hands until a light stretch.', ''],
+    ['Forearm self-massage', 'h1x90', 0, 'Thumb or a ball along the forearm muscles, both sides.', ''] ],
+  build: [
+    ['Slow wrist curls', 'r3x12', 45, 'Light weight, 3 seconds down. Pain may be noticeable but stays at 3/10 or less.', 'Band wrist curls', 'wt'],
+    ['Slow reverse wrist curls', 'r3x12', 45, 'Lower for 4 seconds.', 'Band reverse wrist curls', 'wt'],
+    ['Forearm rotations with a hammer', 'r3x10', 45, 'Hold the handle, turn palm up and palm down slowly. Choke up to make it easier.', 'Rotations holding a water bottle', 'wt'],
+    ['Kneeling weight shifts', 'r2x10', 30, 'Hands under the shoulders, shift forward only as far as feels fine, then back.', ''],
+    ['Wall push-up, fingers turned out', 'r2x10', 30, 'Gradually take more weight on the hands over the weeks.', ''] ] },
+
+{ id: 'elbow', name: 'Elbows', for: 'Planche, levers, one-arm pull-up, muscle-up',
+  pre: [
+    ['Slow reverse wrist curls', 'r2x15', 30, 'The outer-elbow muscles. 3 seconds down.', 'Band reverse wrist curls', 'wt'],
+    ['Slow wrist curls', 'r2x15', 30, 'The inner-elbow muscles.', 'Band wrist curls', 'wt'],
+    ['Forearm rotations with a hammer', 'r2x12', 30, 'Palm up to palm down, slow.', 'Rotations holding a water bottle', 'wt'],
+    ['Slow biceps curl', 'r2x12', 45, 'Light, 3 seconds down. Prepares the biceps tendon for straight-arm work.', 'Towel curl against your foot', 'band'],
+    ['Straight-arm support hold, elbow pits forward', 'h3x20', 45, 'On bars or blocks, arms locked, turn the elbow pits forward. Builds the position planche and levers need.', 'Push-up position hold, elbow pits forward', 'pb'],
+    ['Finger extensions against a rubber band', 'r2x20', 20, '', 'Spread the fingers wide against the other hand'] ],
+  calm: [
+    ['Isometric wrist extension', 'h5x30', 30, 'Forearm on a table, palm down. Push the back of the hand up into your other hand at 30–50% effort. Should ease the pain, not raise it.', ''],
+    ['Isometric biceps hold', 'h5x30', 30, 'Elbow bent 90°, push up under a table at 30–50% effort.', ''],
+    ['Isometric wrist flexion', 'h3x30', 30, 'Palm up, press the palm up into your other hand. For inner-elbow pain.', ''],
+    ['Forearm self-massage', 'h1x90', 0, '', ''],
+    ['Finger tendon glides', 'r2x10', 20, '', ''] ],
+  build: [
+    ['Eccentric reverse wrist curl', 'r3x15', 45, 'Lift with the help of the other hand, lower alone for 4 seconds.', 'Band, same tempo', 'wt'],
+    ['Eccentric wrist curl', 'r3x15', 45, 'Same idea, palm up.', 'Band, same tempo', 'wt'],
+    ['Forearm rotations with a hammer', 'r3x10', 45, '', 'Rotations holding a water bottle', 'wt'],
+    ['Slow band curl', 'r3x12', 45, '3 seconds down, stop short of the end range if it pinches.', 'Towel curl against your foot', 'band'],
+    ['Active hang', 'h3x15', 45, 'Shoulders pulled down, arms straight. Only if pain stays 3/10 or less.', 'Feet-supported hang', 'bar'] ] },
+
+{ id: 'shoulder', name: 'Shoulders', for: 'Handstands, push-ups, levers, flag',
+  pre: [
+    ['Band pull-aparts', 'r2x15', 30, 'Arms straight at chest height, squeeze the shoulder blades.', 'Prone T raises', 'band'],
+    ['Band external rotation', 'r2x12s', 30, 'Elbow by the ribs, a towel under the arm, rotate the forearm out.', 'Side-lying external rotation, no weight', 'band'],
+    ['Scapula push-ups', 'r2x12', 30, '', 'On the knees'],
+    ['Wall slides', 'r2x10', 30, 'Back to the wall, forearms on it, slide up without the ribs flaring.', ''],
+    ['Prone Y, T and W raises', 'r2x6', 30, 'Lying face down, thumbs up. One rep is all three letters.', ''],
+    ['Shoulder dislocates', 'r2x10', 20, 'Band or towel, wide grip, arms straight over the head and behind.', 'Arm circles', 'band'],
+    ['Cuban rotation', 'r2x8', 30, 'Light weight. Upright row to elbow height, rotate up, press, reverse.', 'Band, same movement', 'wt'] ],
+  calm: [
+    ['Pendulum swings', 'h2x45', 15, 'Lean on a table, let the arm hang and swing small circles. Relaxed.', ''],
+    ['Isometric external rotation in a door frame', 'h5x30', 30, 'Elbow at 90° by your side, press the back of the hand into the frame at 30–50% effort.', ''],
+    ['Isometric internal rotation in a door frame', 'h5x30', 30, 'Same position, press the palm into the frame.', ''],
+    ['Lying stick raises', 'r2x10', 20, 'On your back, both hands on a stick, lift overhead only as far as is comfortable.', ''],
+    ['Scapular setting', 'r2x10', 20, 'Gently draw the shoulder blades back and down, hold 5s.', ''] ],
+  build: [
+    ['Side-lying external rotation', 'r3x12s', 45, 'Light weight, slow.', 'Band external rotation', 'wt'],
+    ['Band row', 'r3x12', 45, 'Squeeze the shoulder blades first, then bend the elbows.', 'Table row', 'band'],
+    ['Wall slides with lift-off', 'r3x8', 30, 'At the top, lift the forearms a centimetre off the wall.', 'Wall slides'],
+    ['Prone Y raise', 'r3x10', 30, 'Thumbs up, slow.', ''],
+    ['Incline push-up plus', 'r3x10', 45, 'Hands on a bench, push the upper back high at the top of each rep.', 'Wall push-up plus'] ] },
+
+{ id: 'upper', name: 'Upper back & neck', for: 'Handstand line, bridges, desk days',
+  pre: [
+    ['Thoracic extension over a roller', 'r2x8', 20, 'Roller or rolled towel across the upper back, hands behind the head, extend over it.', 'Seated extension over a chair back'],
+    ['Open books', 'r2x8s', 20, 'Side-lying, knees bent, open the top arm and chest to the other side.', ''],
+    ['Quadruped thoracic rotation', 'r2x8s', 20, 'Hand behind the head, elbow to the floor, then to the ceiling.', ''],
+    ['Cat–cow', 'r2x10', 20, 'Move one segment at a time.', ''],
+    ['Chin tucks', 'r2x10', 20, 'Slide the head straight back to make a double chin, hold 3s.', ''],
+    ['Wall angels', 'r2x8', 20, '', 'Wall slides'] ],
+  calm: [
+    ['Chin tucks, gentle', 'r2x8', 20, '', ''],
+    ['Neck side-bend stretch', 'h2x20s', 15, 'Ear toward the shoulder, the other shoulder stays down. Light.', ''],
+    ['Open books, small range', 'r2x6s', 20, '', ''],
+    ['Cat–cow, small range', 'r2x8', 20, '', ''],
+    ['Breathing lying on your back', 'h1x120', 0, 'Hand on the belly, slow breaths through the nose, long exhale.', ''] ],
+  build: [
+    ['Face-down chin tuck with head lift', 'r3x8', 30, 'Forehead on a towel, tuck the chin and lift the head 2cm. Hold 3s.', 'Chin tucks against the wall'],
+    ['Prone T raise', 'r3x10', 30, '', ''],
+    ['Quadruped thoracic rotation', 'r3x8s', 20, '', ''],
+    ['Wall angels', 'r3x8', 20, '', 'Wall slides'] ] },
+
+{ id: 'lower', name: 'Lower back', for: 'Press, levers, compression, flag',
+  pre: [
+    ['Dead bug', 'r2x8s', 30, 'Lower back stays on the floor while the opposite arm and leg reach.', ''],
+    ['Bird dog', 'r2x8s', 30, 'Reach long, hips level, pause 2s.', ''],
+    ['Side plank', 'h2x30s', 30, '', 'Side plank on the knees'],
+    ['Glute bridge', 'r2x12', 30, 'Ribs down, squeeze the glutes at the top.', ''],
+    ['Jefferson curl, bodyweight', 'r2x6', 30, 'Only if it is pain-free. Roll down one vertebra at a time.', 'Standing forward fold 45s'],
+    ['Cat–cow', 'r2x10', 20, '', ''] ],
+  calm: [
+    ['Knee rocks side to side', 'r2x10', 15, 'On your back, knees bent, let them fall gently side to side.', ''],
+    ['Cat–cow, small range', 'r2x8', 20, '', ''],
+    ['Child’s pose', 'h2x45', 15, 'Knees wide, breathe into the lower back.', ''],
+    ['Glute bridge, small range', 'r2x8', 30, '', ''],
+    ['Easy walk', 'h1x300', 0, 'Five minutes at a relaxed pace. Gentle walking usually helps a sore back more than rest.', ''] ],
+  build: [
+    ['Bird dog, slow', 'r3x6s', 30, '', ''],
+    ['Dead bug', 'r3x8s', 30, '', ''],
+    ['Glute bridge', 'r3x12', 30, '', ''],
+    ['Side plank on the knees', 'h3x20s', 30, '', ''],
+    ['Hip hinge with a stick', 'r3x10', 30, 'Stick along the spine touching head, upper back and tailbone. Hinge without losing contact.', ''] ] },
+
+{ id: 'hips', name: 'Hips', for: 'Press, pancake, pistols, L-sits',
+  pre: [
+    ['90/90 switches', 'r2x8', 20, 'Sitting, both knees bent at 90°, switch sides without hands if you can.', 'With hands behind you'],
+    ['Cossack squat', 'r2x6s', 30, '', 'Holding a support'],
+    ['Couch stretch', 'h2x45s', 15, 'Back knee against a wall, squeeze the glute of that leg.', 'Kneeling hip flexor stretch'],
+    ['Copenhagen plank, short lever', 'h2x15s', 30, 'Side plank with the top knee on a bench. Inner-thigh strength for splits.', 'Side-lying inner-thigh lift'],
+    ['Single-leg glute bridge', 'r2x8s', 30, '', 'Glute bridge'],
+    ['Deep squat hold', 'h1x60', 0, '', 'Heels on a small wedge'] ],
+  calm: [
+    ['Lying figure-4 stretch', 'h2x30s', 15, '', ''],
+    ['Hip circles on all fours', 'r2x8s', 15, '', ''],
+    ['Clamshells', 'r2x12s', 20, '', ''],
+    ['Glute bridge', 'r2x10', 30, '', ''],
+    ['Kneeling hip flexor stretch, gentle', 'h2x30s', 15, '', ''] ],
+  build: [
+    ['Single-leg glute bridge', 'r3x8s', 30, '', 'Glute bridge'],
+    ['Side-lying leg raise', 'r3x12s', 30, 'Toes slightly down, lead with the heel.', ''],
+    ['Split squat, short range', 'r3x8s', 45, '', ''],
+    ['Copenhagen plank, short lever', 'h3x10s', 30, '', 'Side-lying inner-thigh lift'],
+    ['90/90 switches', 'r2x8', 20, '', 'With hands behind you'] ] },
+
+{ id: 'knee', name: 'Knees', for: 'Pistols, jumps, squats',
+  pre: [
+    ['Tibialis raise', 'r2x15', 30, 'Back against a wall, heels forward, lift the toes.', ''],
+    ['Backward walking', 'h1x120', 0, 'Two minutes, pushing through the front of the foot.', ''],
+    ['Knee-over-toe split squat', 'r2x8s', 45, 'Front knee travels well past the toes, back knee down. Go only as deep as feels good.', 'Short-range split squat'],
+    ['Reverse step-up', 'r2x10s', 30, 'Stand on a step, lower the other heel to the floor slowly and stand back up.', ''],
+    ['Assisted sissy squat', 'r2x8', 30, 'Hold a support, knees forward, hips open.', 'Reverse step-up'],
+    ['Nordic curl negative', 'r2x4', 60, 'Feet anchored, lower as slowly as you can.', 'Single-leg hamstring bridge'] ],
+  calm: [
+    ['Wall sit', 'h5x30', 45, 'Knees bent 30–45°, not deep. Pain at 3/10 or less, often it eases.', 'Shallower wall sit'],
+    ['Quad sets', 'r2x10', 15, 'Lying, leg straight, tighten the thigh and hold 5s.', ''],
+    ['Heel slides', 'r2x10s', 15, 'On your back, slide the heel toward you and away.', ''],
+    ['Straight-leg raise', 'r2x10s', 20, '', ''],
+    ['Backward walking', 'h1x120', 0, '', ''] ],
+  build: [
+    ['Slow step-down', 'r3x8s', 45, 'From a low step, lower the other heel in 3 seconds, knee tracking over the toes.', 'Wall sit'],
+    ['Split squat, short range', 'r3x8s', 45, '', ''],
+    ['Reverse step-up', 'r3x10s', 30, '', ''],
+    ['Tibialis raise', 'r3x15', 30, '', ''],
+    ['Single-leg calf raise', 'r3x10s', 30, '', 'Calf raise on both legs'] ] },
+
+{ id: 'ankle', name: 'Ankles & feet', for: 'Pistols, squats, landings',
+  pre: [
+    ['Ankle rocks, knee over toe', 'r2x10s', 20, 'Heel down, drive the knee forward.', ''],
+    ['Calf raise, straight knee', 'r2x12', 30, 'Slow, full range off a step.', 'On the floor'],
+    ['Bent-knee calf raise', 'r2x12', 30, '', ''],
+    ['Tibialis raise', 'r2x15', 30, '', ''],
+    ['Short foot', 'r2x10', 20, 'Shorten the foot by pulling the ball toward the heel without curling the toes.', 'Toe spreads'],
+    ['Single-leg balance', 'h2x30s', 15, 'Eyes closed when it gets easy.', ''] ],
+  calm: [
+    ['Ankle alphabet', 'h2x45s', 15, 'Draw the alphabet with the big toe, slow.', ''],
+    ['Towel scrunches', 'r2x15', 15, '', ''],
+    ['Seated calf raise', 'r2x15', 20, '', ''],
+    ['Single-leg balance near a wall', 'h3x20s', 15, '', ''],
+    ['Calf stretch', 'h2x30s', 15, '', ''] ],
+  build: [
+    ['Single-leg calf raise, slow', 'r3x10s', 30, '', 'Calf raise on both legs'],
+    ['Loaded ankle rocks', 'r2x10s', 20, 'Lean more weight onto the front knee.', ''],
+    ['Balance on a cushion', 'h3x30s', 20, '', 'Single-leg balance'],
+    ['Small hops in place', 'r3x10', 45, 'Only once walking and calf raises are pain-free.', 'Calf raise on both legs'] ] }
+];
+const careById = Object.fromEntries(CARE.map(c => [c.id, c]));
+/* Which areas each skill loads hardest, used for suggestions */
+const CARE_FOR = { hs: ['wrist', 'shoulder'], oahs: ['wrist', 'shoulder', 'upper'], press: ['wrist', 'hips', 'lower'], hspu: ['shoulder', 'elbow', 'wrist'], planche: ['wrist', 'elbow', 'shoulder'], fl: ['elbow', 'shoulder', 'lower'], oap: ['elbow', 'shoulder'], mu: ['elbow', 'shoulder', 'wrist'], lsit: ['wrist', 'hips'], bl: ['elbow', 'shoulder'], flag: ['shoulder', 'lower'], pistol: ['knee', 'ankle', 'hips'] };
+
+'use strict';
+/* ───────── state ───────── */
+const KEY = 'bodyweight-mastery-v1';
+const inClaude = () => !!(window.claude && window.claude.use);
+const DEF = () => ({ v: 1, lv: {}, tune: {}, sel: [], min: 60, deload: false, sound: true, theme: 'auto',
+  eq: { bar: true, band: true, pb: true, wt: true, dip: true, pole: false }, care: { mode: 'pre', areas: [], st: {}, min: 15 }, cur: null, log: [], best: {}, upd: 0, tab: 'today', open: {} });
+let S = DEF();
+let memOnly = false, cloudDoc = null, cloudState = 'local', saveT = null, writing = false, dirty = false;
+const EQ_NAMES = { bar: 'Pull-up bar', band: 'Resistance bands', pb: 'Parallettes or blocks', wt: 'Weights (dumbbell, plate, vest)', dip: 'Dip bars', pole: 'Vertical pole or wall bars' };
+const EQ_SHORT = { bar: 'a bar', band: 'a band', pb: 'blocks', wt: 'weights', dip: 'dip bars', pole: 'a pole' };
+const byId = Object.fromEntries(SKILLS.map(s => [s.id, s]));
+const $ = (q, el = document) => el.querySelector(q);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const today = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+const dayDiff = (a, b) => Math.round((new Date(b + 'T12:00') - new Date(a + 'T12:00')) / 864e5);
+const lvl = id => Math.min(5, Math.max(1, S.lv[id] || 1));
+const tun = id => Math.min(3, Math.max(-2, S.tune[id] || 0));
+
+function merge(o) { const d = DEF(); if (!o || typeof o !== 'object') return d; const r = Object.assign(d, o); r.eq = Object.assign(DEF().eq, o.eq || {}); r.lv = o.lv || {}; r.tune = o.tune || {}; r.log = Array.isArray(o.log) ? o.log : []; r.best = o.best || {}; r.open = o.open || {}; r.sel = (o.sel || []).filter(id => byId[id]); r.care = Object.assign(DEF().care, o.care || {}); r.care.st = r.care.st || {}; r.care.areas = (r.care.areas || []).filter(id => careById[id]); return r; }
+function loadLocal() { try { const t = localStorage.getItem(KEY); if (t) S = merge(JSON.parse(t)); S.flash = null; } catch (e) { memOnly = true; } }
+function save() {
+  S.upd = Date.now(); if (S.log.length > 400) S.log = S.log.slice(-400);
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { memOnly = true; }
+  if (cloudDoc) { dirty = true; clearTimeout(saveT); saveT = setTimeout(pushCloud, 1500); }
+}
+async function pushCloud() {
+  if (!cloudDoc || writing || !dirty) return; writing = true; dirty = false;
+  try { await cloudDoc.set({ upd: S.upd, json: JSON.stringify(S) }); cloudState = 'cloud'; }
+  catch (e) { cloudState = 'local'; }
+  writing = false; if (dirty) { clearTimeout(saveT); saveT = setTimeout(pushCloud, 1500); }
+  if (S.tab === 'guide') paintSync();
+}
+async function initCloud() {
+  if (!inClaude()) { if (!initCloud.again) { initCloud.again = true; setTimeout(initCloud, 1500); } return; }
+  if (cloudDoc) return;
+  try {
+    const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+    if (!db || !user) return; const uid = await user.id(); if (!uid) return;
+    cloudDoc = db.doc('data/users/' + uid + '/state');
+    const snap = await cloudDoc.get();
+    if (snap.exists) { const d = snap.data(); if (d && d.json && (d.upd || 0) > (S.upd || 0)) { const keepTab = S.tab; S = merge(JSON.parse(d.json)); S.tab = keepTab; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} if (!T) render(); } else if ((S.upd || 0) > (d && d.upd || 0)) { dirty = true; pushCloud(); } }
+    else if (S.upd) { dirty = true; pushCloud(); }
+    cloudState = 'cloud'; if (S.tab === 'guide') paintSync();
+  } catch (e) { cloudState = 'local'; }
+}
+
+/* ───────── dose maths ───────── */
+function parseDose(str) { const side = /s$/.test(str); const m = str.replace(/s$/, '').match(/^([hratm])(\d+)(?:x(\d+))?$/); const k = m[1]; return k === 'h' || k === 'r' ? { k, sets: +m[2], n: +m[3], side } : { k, sets: 1, n: +m[2], side }; }
+function tuned(d0, t, deload) {
+  const d = Object.assign({}, d0);
+  if (d.k === 'h') d.n = Math.max(3, d.n + (d.n >= 30 ? 5 : 2) * t);
+  else if (d.k === 'r') { if (d.n <= 2) d.sets = Math.max(2, d.sets + t); else d.n = Math.max(1, d.n + t); }
+  else if (d.k === 'a') d.n = Math.max(10, Math.round(d.n * (1 + 0.15 * t) / 5) * 5);
+  if (deload) { if (d.k === 'h' || d.k === 'r') d.sets = Math.max(1, Math.round(d.sets * 0.6)); else if (d.k === 'a') d.n = Math.max(10, Math.round(d.n * 0.6 / 5) * 5); else d.n = Math.max(2, Math.round(d.n * 0.6)); }
+  return d;
+}
+const mmss = s => { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+function doseText(d) { const e = d.side ? ' each side' : '';
+  if (d.k === 'h') return (d.sets > 1 ? d.sets + ' × ' : '') + (d.n >= 90 ? mmss(d.n) : d.n + 's') + e;
+  if (d.k === 'r') return d.sets + ' × ' + d.n + (d.n === 1 ? ' rep' : ' reps') + e;
+  if (d.k === 'a') return 'collect ' + (d.n >= 60 ? mmss(d.n) : d.n + 's');
+  if (d.k === 't') return d.n + ' attempts';
+  return d.n + ' min window'; }
+function estSec(d, rest) { const sd = d.side ? 2 : 1;
+  if (d.k === 'h') return d.sets * (d.n * sd + (d.side ? 6 : 0) + rest) + 15;
+  if (d.k === 'r') return d.sets * (d.n * 5 * sd + rest) + 15;
+  if (d.k === 'a') return d.n * 2.2 + 30;
+  if (d.k === 't') return d.n * (15 + rest);
+  return d.n * 60; }
+const unitsOf = d => d.k === 'h' ? d.sets : d.k === 'r' ? d.sets : d.k === 't' ? d.n : 1;
+
+/* ───────── history helpers ───────── */
+function lastTrained(id) { for (let i = S.log.length - 1; i >= 0; i--) if (S.log[i].sk.some(x => x.id === id)) return S.log[i].d; return null; }
+function sessionsOf(id) { return S.log.filter(l => l.sk.some(x => x.id === id)).length; }
+function agoText(d) { if (!d) return 'not trained yet'; const n = dayDiff(d, today()); return n <= 0 ? 'today' : n === 1 ? 'yesterday' : n + ' days ago'; }
+function missing(sk) { const need = sk.id === 'flag' ? 'pole' : ['fl', 'oap', 'mu', 'bl'].includes(sk.id) ? 'bar' : null; return need && !S.eq[need] ? need : null; }
+
+/* ───────── workout builder ───────── */
+function mkItem(row, t, deload, role) {
+  const [r, day, n, dose, rest, cue, swap, needs] = row; const d = tuned(parseDose(dose), r === 'A' ? 0 : t, deload);
+  const it = { n, d, rest: rest || 0, cue: cue || '', swap: swap || '', role: role || r, u: 0, got: 0, done: false, res: '', sw: false, lock: false };
+  if (needs && !S.eq[needs] && swap) { it.sw = true; it.lock = needs; }
+  return it;
+}
+function buildWorkout() {
+  const ids = S.sel.filter(id => byId[id] && !missing(byId[id])).sort((a, b) => byId[a].order - byId[b].order);
+  if (!ids.length) return null;
+  const min = S.min, short = min <= 30, warn = [];
+  const tags = []; ids.forEach(id => byId[id].prep.forEach(t => { if (!tags.includes(t)) tags.push(t); }));
+  const prep = { key: 'prep', title: 'Prep', sub: 'Joints warm, nothing tiring', items: [] };
+  tags.forEach(t => PREP[t].slice(0, short ? 1 : 2).forEach(p => prep.items.push(mkItem(['W', '*', p[0], p[1], 10, p[2], ''], 0, false, 'W'))));
+  const cool = { key: 'cool', title: 'Cool-down', sub: 'Two minutes that keep the joints happy', items: [] };
+  tags.filter(t => COOL[t]).slice(0, short ? 1 : 3).forEach(t => cool.items.push(mkItem(['W', '*', COOL[t][0], COOL[t][1], 5, COOL[t][2], ''], 0, false, 'W')));
+  const secOf = b => b.items.reduce((a, it) => a + estSec(it.d, it.rest), 0);
+  let budget = min * 60 - secOf(prep) - secOf(cool);
+  const used = new Set(), blocks = [], pools = [];
+  const both = ids.includes('hs') && ids.includes('oahs');
+  ids.forEach(id => {
+    const sk = byId[id], L = lvl(id), lv = sk.levels[L - 1], n = sessionsOf(id), v = (S.varOv && S.varOv[id]) || (n % 2 === 0 ? 'A' : 'B');
+    const rows = lv.ex.filter(r => r[1] === '*' || r[1] === v);
+    const b = { key: id, title: sk.name, sub: 'Level ' + L + ' · ' + lv.n + ' · session ' + v, v, L, items: [], feel: '' };
+    let P = rows.filter(r => r[0] === 'P');
+    if (id === 'hs' && both) { P = P.slice(0, 1); b.sub += ' · short, as a warm-up for one-arm work'; }
+    P.forEach(r => { const k = r[2].toLowerCase(); if (used.has(k)) return; used.add(k); const it = mkItem(r, tun(id), S.deload); if (id === 'hs' && both && (it.d.k === 'h' || it.d.k === 'r')) it.d.sets = Math.min(it.d.sets, 3); b.items.push(it); });
+    blocks.push(b); pools.push({ b, id, S: rows.filter(r => r[0] === 'S'), A: rows.filter(r => r[0] === 'A'), X: (id === 'hs' && both) ? [] : lv.ex.filter(r => r[1] !== '*' && r[1] !== v) });
+  });
+  let pSec = blocks.reduce((a, b) => a + secOf(b), 0);
+  if (pSec > budget) {
+    const f = Math.max(0.5, budget / pSec);
+    blocks.forEach(b => b.items.forEach(it => { if (it.d.k === 'h' || it.d.k === 'r') it.d.sets = Math.max(2, Math.round(it.d.sets * f)); else if (it.d.k === 'a') it.d.n = Math.max(15, Math.round(it.d.n * f / 5) * 5); else it.d.n = Math.max(3, Math.round(it.d.n * f)); }));
+    pSec = blocks.reduce((a, b) => a + secOf(b), 0);
+    warn.push(['Sets were trimmed to fit ' + min + ' minutes.', pSec > budget * 1.12 ? 'Even trimmed, this runs to about ' + Math.round((pSec + secOf(prep) + secOf(cool)) / 60) + ' minutes. Drop a skill or give it more time.' : 'For full doses, pick fewer skills or a longer session.']);
+  }
+  let left = budget - pSec;
+  ['S', 'A', 'X'].forEach(role => { let more = true, round = 0; while (more) { more = false; pools.forEach(p => { const r = p[role][round]; if (!r) return; more = true; const k = r[2].toLowerCase(); if (used.has(k)) return; const it = mkItem(r, tun(p.id), S.deload); const s = estSec(it.d, it.rest); if (s <= left + 45) { used.add(k); p.b.items.push(it); left -= s; } }); round++; } });
+  for (let pass = 0; pass < 2 && left > budget * 0.2; pass++) blocks.forEach(b => b.items.forEach(it => { if (it.role !== 'P' || (it.d.k !== 'h' && it.d.k !== 'r') || it.d.sets >= 8) return; const s = estSec(it.d, it.rest) / it.d.sets; if (s <= left) { it.d.sets++; left -= s; } }));
+  blocks.forEach(b => b.items.sort((x, y) => 'PSA'.indexOf(x.role) - 'PSA'.indexOf(y.role)));
+  const inBlocks = new Set(blocks.flatMap(b => b.items.map(it => it.n.toLowerCase()))); prep.items = prep.items.filter(it => !inBlocks.has(it.n.toLowerCase())); cool.items = cool.items.filter(it => !inBlocks.has(it.n.toLowerCase()));
+  const sa = ids.filter(id => ['planche', 'fl', 'bl', 'flag', 'oahs'].includes(id)).length;
+  if (ids.length > 4) warn.push(['That is ' + ids.length + ' skills in one session.', 'Fine for a taster day. For real progress, 2 to 4 skills per session work better.']);
+  if (ids.includes('planche') && ids.includes('bl') || sa >= 4 || (ids.includes('oap') && ids.includes('fl') && ids.includes('bl'))) warn.push(['Heavy day for the elbows and biceps tendons.', 'Keep every hold 1 to 2 seconds short of failure and stop at any sharp pain in the elbow.']);
+  const yest = ids.filter(id => { const d = lastTrained(id); return d && dayDiff(d, today()) <= 1 && ['push', 'pull'].includes(byId[id].cat); });
+  if (yest.length) warn.push([yest.map(id => byId[id].name).join(', ') + ': trained in the last day.', 'Strength skills like 48 hours between hard sessions. Go lighter today or swap for a balance skill.']);
+  if (S.deload) warn.push(['Deload week is on.', 'Sets are cut by about 40%. Turn it off in Guide › Settings.']);
+  const all = [prep, ...blocks, cool].filter(b => b.items.length); const est = Math.round(all.reduce((a, b) => a + secOf(b), 0) / 60);
+  if (est < min * 0.75) warn.push(['This runs about ' + est + ' minutes, shorter than the ' + min + ' you asked for.', 'That is everything level work needs for ' + (ids.length === 1 ? 'one skill' : 'these skills') + '. Add a skill to use the rest of the time.']);
+  return { d: today(), min, est, blocks: all, warn, start: Date.now() };
+}
+
+/* ───────── sound + timer ───────── */
+let AC = null;
+function beep(f, ms) { if (!S.sound) return; try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume(); const o = AC.createOscillator(), g = AC.createGain(); o.frequency.value = f || 880; o.connect(g); g.connect(AC.destination); g.gain.setValueAtTime(0.0001, AC.currentTime); g.gain.exponentialRampToValueAtTime(0.25, AC.currentTime + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, AC.currentTime + (ms || 180) / 1000); o.start(); o.stop(AC.currentTime + (ms || 180) / 1000 + 0.02); } catch (e) {} }
+let T = null, tick = null;
+function itemAt(bi, ii) { return S.cur && S.cur.blocks[bi] && S.cur.blocks[bi].items[ii]; }
+function startHold(bi, ii) { const it = itemAt(bi, ii); if (!it) return; beep(660, 80);
+  const q = [['ready', 5, 'Get ready']];
+  if (it.d.k === 'h') { if (it.d.side) { q.push(['work', it.d.n, 'Hold · first side'], ['ready', 5, 'Switch side'], ['work', it.d.n, 'Hold · second side']); } else q.push(['work', it.d.n, 'Hold']); if (it.rest) q.push(['rest', it.rest, 'Rest']); }
+  else if (it.d.k === 'm') q.push(['work', it.d.n * 60, 'Practice window']);
+  else if (it.d.k === 'a') q.push(['up', 0, 'Collecting']);
+  T = { bi, ii, q, i: 0, end: 0, t0: 0, paused: 0 }; phase(); }
+function startRest(bi, ii) { const it = itemAt(bi, ii); if (!it) return; markUnit(bi, ii); if (!it.rest || it.done) { render(); return; } T = { bi, ii, q: [['rest', it.rest, 'Rest']], i: 0, restOnly: true }; phase(); render(); }
+function phase() { const p = T.q[T.i]; T.t0 = Date.now(); T.end = Date.now() + p[1] * 1000; T.last = -1; clearInterval(tick); tick = setInterval(tk, 200); paintTimer(); }
+function tk() { if (!T) return clearInterval(tick); const p = T.q[T.i];
+  if (p[0] === 'up') return paintTimer();
+  const left = (T.end - Date.now()) / 1000, sec = Math.ceil(left);
+  if (sec !== T.last) { T.last = sec; if (sec <= 3 && sec > 0) beep(p[0] === 'work' ? 700 : 520, 90); paintTimer(); }
+  if (left <= 0) { beep(p[0] === 'ready' ? 990 : 440, p[0] === 'ready' ? 260 : 420); const wasWork = p[0] === 'work'; T.i++;
+    if (wasWork && !(T.q[T.i] && T.q[T.i][0] === 'ready' && T.q[T.i][2] === 'Switch side')) { markUnit(T.bi, T.ii); render(); }
+    if (T.i >= T.q.length) return stopTimer(); phase(); } }
+function stopTimer(collect) { if (T && collect) { const it = itemAt(T.bi, T.ii); if (it && T.q[T.i] && T.q[T.i][0] === 'up') { it.got += Math.round((Date.now() - T.t0) / 1000); if (it.got >= it.d.n) it.done = true; save(); } }
+  clearInterval(tick); T = null; paintTimer(); render(); }
+function markUnit(bi, ii) { const it = itemAt(bi, ii); if (!it) return; const u = unitsOf(it.d); it.u = Math.min(u, it.u + 1); if (it.u >= u) it.done = true; save(); }
+function paintTimer() { const el = $('#dock'); if (!T) { el.className = 'dock'; el.innerHTML = ''; return; }
+  const p = T.q[T.i], it = itemAt(T.bi, T.ii) || { n: '' }; const up = p[0] === 'up';
+  const val = up ? mmss((Date.now() - T.t0) / 1000) : mmss(Math.ceil((T.end - Date.now()) / 1000));
+  el.className = 'dock on';
+  el.innerHTML = '<div class="dock-in"><div class="timer ' + (p[0] === 'work' || up ? 'work' : '') + '" role="timer" aria-live="off"><div><div class="ph">' + esc(p[2]) + (up ? ' · ' + (it.got || 0) + 's of ' + it.d.n + 's banked' : '') + '</div><div class="nm">' + esc(it.sw ? it.swap : it.n) + '</div><div class="tb" style="justify-content:flex-start">' + (up ? '<button data-act="t-bank">Stop and bank it</button>' : '<button data-act="t-skip">Skip</button><button data-act="t-add">+15s</button>') + '<button data-act="t-stop">Close</button></div></div><div class="clock">' + val + '</div></div></div>'; }
+
+/* ───────── render ───────── */
+function render() { const t = S.tab; document.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b.dataset.tab === t));
+  $('#view').innerHTML = t === 'today' ? vToday() : t === 'skills' ? vSkills() : t === 'care' ? vCare() : t === 'log' ? vLog() : vGuide();
+  if (t === 'guide') paintSync(); }
+function head(sub) { const d = new Date(); return '<div class="top"><div class="brand"><small>' + esc(sub) + '</small>Bodyweight<br>Mastery</div><div class="date">' + d.toLocaleDateString(undefined, { weekday: 'long' }) + '<br>' + d.toLocaleDateString(undefined, { day: 'numeric', month: 'short' }) + '</div></div>'; }
+
+function vToday() { if (S.cur) return vWorkout();
+  const n = S.sel.length, unset = !Object.keys(S.lv).length;
+  let h = head('Pick · build · train');
+  if (S.flash) { h += '<div class="banner good"><b>' + esc(S.flash[0]) + '</b>' + esc(S.flash[1]) + '</div>'; }
+  if (unset) h += '<div class="banner acc"><b>First time here? Set your levels.</b>Every skill starts at level 1. Open Skills and tap the level that matches you today. It takes a minute and changes every workout. <div style="margin-top:8px"><button class="btn sm" data-act="go" data-tab="skills">Set my levels</button></div></div>';
+  h += '<div class="sec"><div class="sec-h"><h2>What are you training today?</h2><span class="sub">' + (n ? n + ' picked' : 'pick 2 to 4') + '</span></div><div class="row">';
+  SKILLS.forEach(sk => { const on = S.sel.includes(sk.id), miss = missing(sk);
+    h += '<button class="chip skc' + (on ? ' on' : '') + '" style="--cc:' + CATS[sk.cat].c + '" data-act="pick" data-id="' + sk.id + '" aria-pressed="' + on + '"' + (miss ? ' disabled title="Needs ' + EQ_SHORT[miss] + '. Turn it on in Guide, Settings."' : '') + '><i></i>' + esc(sk.name) + ' <span class="num">L' + lvl(sk.id) + '</span></button>'; });
+  h += '</div>';
+  if (n) { h += '<div class="picked">'; S.sel.slice().sort((x, y) => byId[x].order - byId[y].order).forEach(id => { const sk = byId[id], last = lastTrained(id), dd = last ? dayDiff(last, today()) : 99, hot = dd <= 1 && ['push', 'pull'].includes(sk.cat);
+      h += '<div><b>' + esc(sk.name) + '</b><span class="mut">Level ' + lvl(id) + ' · ' + esc(sk.levels[lvl(id) - 1].n) + ' · <span class="' + (hot ? 'warnc' : '') + '">' + agoText(last) + '</span></span></div>'; }); h += '</div>'; }
+  if (SKILLS.some(missing)) h += '<p class="mut" style="font-size:12.5px;margin-top:8px">Greyed-out skills need equipment that is switched off in Guide › Settings.</p>';
+  h += '<div class="row" style="margin-top:10px"><button class="btn sm" data-act="suggest">Suggest for me</button>' + (n ? '<button class="btn sm ghost" data-act="clear">Clear</button>' : '') + '</div></div>';
+  h += '<div class="sec"><div class="sec-h"><h2>How long do you have?</h2></div><div class="row">' + [30, 45, 60, 90, 120].map(m => '<button class="chip' + (S.min === m ? ' on' : '') + '" data-act="min" data-m="' + m + '">' + m + ' min</button>').join('') + '</div></div>';
+  h += '<div class="sec"><button class="btn pri big" data-act="build"' + (n ? '' : ' disabled') + '>Build my workout</button><p class="lede" style="margin-top:10px">' + (n ? 'Order is set for you: balance first, then straight-arm strength, then bent-arm strength, core and legs.' : 'Pick the skills you want and the session is built from your level in each one.') + '</p></div>';
+  return h; }
+
+function vWorkout() { const W = S.cur; let tot = 0, dn = 0; W.blocks.forEach(b => b.items.forEach(it => { tot++; if (it.done) dn++; }));
+  const sk = W.blocks.filter(b => byId[b.key]), cb = W.blocks.filter(b => b.care);
+  let h = head(sk.length ? 'Today’s session' : W.rehab ? 'Rehab session' : 'Prehab session');
+  h += '<div class="sum"><div><b>' + (sk.length || cb.length) + '</b><span>' + (sk.length ? (sk.length === 1 ? 'skill' : 'skills') : (cb.length === 1 ? 'area' : 'areas')) + '</span></div><div><b>~' + W.est + '</b><span>minutes</span></div><div><b>' + dn + '/' + tot + '</b><span>done</span></div></div><div class="prog"><i style="width:' + Math.round(dn / tot * 100) + '%"></i></div>';
+  W.warn.forEach(w => h += '<div class="banner warn"><b>' + esc(w[0]) + '</b>' + esc(w[1]) + '</div>');
+  W.blocks.forEach((b, bi) => { const s = byId[b.key];
+    h += '<div class="blk"><div class="blk-h" style="--cc:' + (s ? CATS[s.cat].c : b.care ? (b.rehab ? 'var(--warn)' : 'var(--good)') : 'var(--mut)') + '"><div><h3>' + esc(b.title) + '</h3><div class="sub">' + esc(b.sub) + '</div></div>' + (s ? '<button class="btn sm ghost" data-act="flip" data-id="' + b.key + '" title="Switch to the other session variant">A ⇄ B</button>' : '') + '</div><div class="list">';
+    b.items.forEach((it, ii) => { const k = bi + '-' + ii, open = S.open[k], u = unitsOf(it.d), nm = it.sw ? it.swap : it.n, best = S.best[nm];
+      h += '<div class="ex' + (it.done ? ' done' : '') + '"><div class="ex-row"><button class="tick" data-act="tick" data-k="' + k + '" aria-label="Mark ' + esc(nm) + ' done">✓</button><button class="ex-main" data-act="open" data-k="' + k + '" aria-expanded="' + !!open + '"><b>' + esc(nm) + '</b><span class="dose"><em>' + doseText(it.d) + '</em>' + (it.rest && it.role !== 'W' && it.d.k !== 'a' && it.d.k !== 'm' ? ' · rest ' + mmss(it.rest) : '') + '</span></button><span class="tag">' + ({ P: 'Skill', S: 'Strength', A: 'Mobility', W: 'Prep', C: 'Prehab', R: 'Rehab' }[it.role]) + '</span></div>';
+      if (open) { h += '<div class="ex-body">' + (it.cue && !it.sw ? '<p>' + esc(it.cue) + '</p>' : '') + (it.sw ? '<p class="mut">Swapped in for: ' + esc(it.n) + (it.lock ? ' (needs ' + EQ_SHORT[it.lock] + ')' : '') + '</p>' : '');
+        if (it.d.k === 'a') h += '<div class="swap num">Banked ' + it.got + 's of ' + it.d.n + 's</div>';
+        else if (u > 1) { h += '<div class="pips">'; for (let i = 0; i < u; i++) h += '<span class="pip' + (i < it.u ? ' on' : '') + '">' + (i + 1) + '</span>'; h += '</div>'; }
+        h += '<div class="row">';
+        if (!it.done) { if (it.d.k === 'h') h += '<button class="btn sm pri" data-act="hold" data-k="' + k + '">Start ' + it.d.n + 's ' + (it.role === 'W' || (it.role === 'C' && it.d.n >= 90) ? 'timer' : 'hold') + '</button>';
+          else if (it.d.k === 'a') h += '<button class="btn sm pri" data-act="hold" data-k="' + k + '">Start stopwatch</button>';
+          else if (it.d.k === 'm') h += '<button class="btn sm pri" data-act="hold" data-k="' + k + '">Start ' + it.d.n + ' min</button>';
+          else h += '<button class="btn sm pri" data-act="rest" data-k="' + k + '">' + (it.d.k === 't' ? 'Attempt' : 'Set') + ' done' + (it.rest ? ' · rest ' + mmss(it.rest) : '') + '</button>'; }
+        if (it.swap && !it.lock) h += '<button class="btn sm" data-act="swap" data-k="' + k + '">' + (it.sw ? 'Back to the original' : 'Swap') + '</button>';
+        h += '</div>' + (it.swap && !it.sw ? '<div class="swap">Easier or no-equipment option: ' + esc(it.swap) + '</div>' : '');
+        if (it.role === 'P' || it.role === 'S') h += '<label class="res" for="res-' + k + '">Best set today <input id="res-' + k + '" inputmode="decimal" data-act-in="res" data-k="' + k + '" value="' + esc(it.res) + '" placeholder="' + (it.d.k === 'r' ? 'reps' : 'sec') + '">' + (best ? '<span>record ' + best + '</span>' : '') + '</label>';
+        h += '</div>'; }
+      h += '</div>'; });
+    h += '</div>';
+    if (b.rehab) h += '<div class="row" style="margin-top:9px"><span class="lbl">Pain during it</span>' + PAIN.map(p => '<button class="chip sm' + (b.pain === p[0] ? ' on' : '') + '" data-act="pain" data-b="' + bi + '" data-p="' + p[0] + '">' + p[1] + '</button>').join('') + '</div>' + (b.pain === 'high' ? '<div class="banner warn"><b>Stop this block for today.</b>Pain above 5/10 means the load is too much right now. If it keeps happening, or there is swelling, numbness or night pain, see a physiotherapist or doctor.</div>' : '');
+    if (s) h += '<div class="row" style="margin-top:9px"><span class="lbl">How did ' + esc(s.short) + ' feel?</span>' + [['easy', 'Easy'], ['right', 'Right'], ['hard', 'Hard']].map(f => '<button class="chip sm ' + f[0] + (b.feel === f[0] ? ' on' : '') + '" data-act="feel" data-b="' + bi + '" data-f="' + f[0] + '">' + f[1] + '</button>').join('') + '</div>';
+    h += '</div>'; });
+  h += '<div class="sec"><button class="btn pri big" data-act="finish">Finish and save</button><div class="row" style="margin-top:10px;justify-content:space-between">' + (sk.length ? '<button class="btn sm ghost" data-act="rebuild">Change skills</button>' : '') + (cb.length ? '' : '<button class="btn sm ghost" data-act="go" data-tab="care">Add prehab</button>') + '<button class="btn sm ghost danger" data-act="discard">Discard session</button></div></div>';
+  return h; }
+
+function vSkills() { let h = head('Levels');
+  h += '<div class="sec"><div class="sec-h"><h2>Your level in each skill</h2></div><p class="lede">Five levels per skill. Pick the highest one whose “start here” line is true for you today. Pass the test to move up; the app also nudges you when a level starts to feel easy.</p></div><div class="list" style="margin-top:14px">';
+  SKILLS.forEach(sk => { const L = lvl(sk.id), open = S.open['s-' + sk.id], t = tun(sk.id), n = sessionsOf(sk.id);
+    h += '<div class="card"><button class="card-h" style="--cc:' + CATS[sk.cat].c + '" data-act="sopen" data-id="' + sk.id + '" aria-expanded="' + !!open + '"><span><b>' + esc(sk.name) + '</b><span class="sub">' + CATS[sk.cat].n + ' · ' + n + (n === 1 ? ' session' : ' sessions') + ' · ' + agoText(lastTrained(sk.id)) + '</span></span><span class="lv">L' + L + ' · ' + esc(sk.levels[L - 1].n) + '</span></button>';
+    if (open) { h += '<div class="card-b"><p style="font-size:13.5px">' + esc(sk.blurb) + '</p><p class="mut" style="font-size:12.5px">How often: ' + esc(sk.freq) + '</p>' + (t >= 2 ? '<div class="banner good"><b>Level ' + L + ' is feeling easy.</b>Try the test below and move up if you pass.</div>' : '') + '<div class="ladder">';
+      sk.levels.forEach((lv, i) => { const cur = i + 1 === L;
+        h += '<div class="rung' + (cur ? ' cur' : i + 1 < L ? ' past' : '') + '"><div class="n">' + (i + 1) + '</div><div><h4>' + esc(lv.n) + (cur ? ' <span class="tag">you are here</span>' : '') + '</h4><dl><div><dt>Start here if</dt><dd>' + esc(lv.here) + '</dd></div><div><dt>Move up when</dt><dd>' + esc(lv.test) + '</dd></div></dl>';
+        if (cur) { h += '<ul class="drills">' + lv.ex.filter(r => r[0] === 'P').map(r => '<li>' + esc(r[2]) + ' <span class="mut num">' + doseText(tuned(parseDose(r[3]), t, false)) + '</span></li>').join('') + '</ul><div class="acts"><span class="step"><button data-act="tune" data-id="' + sk.id + '" data-d="-1" aria-label="Lighter doses">−</button><span>Dose: <b>' + (t === 0 ? 'standard' : t > 0 ? 'heavier +' + t : 'lighter ' + t) + '</b></span><button data-act="tune" data-id="' + sk.id + '" data-d="1" aria-label="Heavier doses">+</button></span>' + (L < 5 ? '<button class="btn sm pri" data-act="setlv" data-id="' + sk.id + '" data-l="' + (L + 1) + '">Test passed: go to level ' + (L + 1) + '</button>' : '') + '</div>'; }
+        else h += '<div class="acts"><button class="btn sm" data-act="setlv" data-id="' + sk.id + '" data-l="' + (i + 1) + '">Set as my level</button></div>';
+        h += '</div></div>'; });
+      h += '</div></div>'; }
+    h += '</div>'; });
+  return h + '</div>'; }
+
+/* ───────── prehab / rehab ───────── */
+const PAIN = [['none', '0'], ['low', '1–3'], ['mid', '4–5'], ['high', '6+']];
+function careSuggest() { const score = {}; const add = (id, w) => (CARE_FOR[id] || []).forEach((a, i) => score[a] = (score[a] || 0) + w * (3 - i));
+  S.sel.forEach(id => add(id, 2)); S.log.filter(l => dayDiff(l.d, today()) < 14).forEach(l => l.sk.forEach(x => add(x.id, 1)));
+  return Object.keys(score).sort((x, y) => score[y] - score[x]); }
+function lastCare(id) { for (let i = S.log.length - 1; i >= 0; i--) { const c = (S.log[i].care || []).find(x => x.a === id); if (c) return Object.assign({ d: S.log[i].d }, c); } return null; }
+function buildCare() { const C = S.care, rehab = C.mode === 'rehab', ids = C.areas.filter(id => careById[id]); if (!ids.length) return [];
+  const per = C.min * 60 / ids.length;
+  return ids.map(id => { const a = careById[id], stage = rehab ? (C.st[id] || 'calm') : 'pre', rows = a[stage];
+    const b = { key: 'care-' + id, area: id, care: true, rehab, stage: rehab ? stage : '', title: a.name, sub: rehab ? (stage === 'calm' ? 'Rehab · stage 1, calm it down' : 'Rehab · stage 2, rebuild') : 'Prehab · keep it strong', items: [], pain: '' };
+    let used = 0; rows.forEach((r, i) => { const it = mkItem(['A', '*', r[0], r[1], r[2], r[3], r[4], r[5]], 0, false, rehab ? 'R' : 'C'); const s = estSec(it.d, it.rest); if (i < 2 || used + s <= per + 30) { b.items.push(it); used += s; } });
+    if (used > per * 1.1) { const f = per / used; b.items.forEach(it => { if (it.d.k === 'h' || it.d.k === 'r') it.d.sets = Math.max(2, Math.round(it.d.sets * f)); }); }
+    return b; }); }
+function vCare() { const C = S.care, rehab = C.mode === 'rehab', sug = careSuggest(), n = C.areas.length; let h = head('Prehab · rehab');
+  h += '<div class="sec"><div class="sec-h"><h2>What is it for?</h2></div><div class="row"><button class="chip' + (!rehab ? ' on' : '') + '" data-act="c-mode" data-m="pre">Prehab · keep joints strong</button><button class="chip' + (rehab ? ' on' : '') + '" data-act="c-mode" data-m="rehab">Rehab · easing back from a niggle</button></div>';
+  h += rehab ? '<div class="banner warn"><b>For niggles, not injuries.</b>Use rehab for ordinary training aches that are getting better. See a physiotherapist or doctor first for anything after a fall or a pop, swelling, numbness or tingling, pain at night or at rest, or pain that is not improving after two weeks.</div>' : '<p class="lede" style="margin-top:10px">Short joint work that keeps wrists, elbows and shoulders ready for skill training. Two or three areas, a few times a week, on any day.</p>';
+  h += '</div><div class="sec"><div class="sec-h"><h2>Focus areas</h2><span class="sub">' + (n ? n + ' picked' : 'pick 1 to 3') + '</span></div><div class="row">';
+  CARE.forEach(a => { const on = C.areas.includes(a.id), sg = sug.slice(0, 3).includes(a.id);
+    h += '<button class="chip skc' + (on ? ' on' : '') + '" style="--cc:' + (rehab ? 'var(--warn)' : 'var(--good)') + '" data-act="c-area" data-id="' + a.id + '" aria-pressed="' + on + '"><i></i>' + esc(a.name) + (sg ? ' <span class="num">suggested</span>' : '') + '</button>'; });
+  h += '</div>';
+  if (sug.length) h += '<div class="row" style="margin-top:10px"><button class="btn sm" data-act="c-sugg">Pick from what I train</button><span class="mut" style="font-size:12.5px">based on your skills this week</span></div>';
+  if (n) { h += '<div class="picked">'; C.areas.forEach(id => { const a = careById[id], lc = lastCare(id), st = C.st[id] || 'calm';
+      h += '<div><b>' + esc(a.name) + '</b><span class="mut">' + esc(a.for) + (lc ? ' · last ' + agoText(lc.d) + (lc.p ? ', pain ' + PAIN.find(p => p[0] === lc.p)[1] : '') : '') + '</span>';
+      if (rehab) { h += '<div class="row" style="margin-top:6px"><button class="chip sm' + (st === 'calm' ? ' on' : '') + '" data-act="c-stage" data-id="' + id + '" data-s="calm">1 · Calm it down</button><button class="chip sm' + (st === 'build' ? ' on' : '') + '" data-act="c-stage" data-id="' + id + '" data-s="build">2 · Rebuild</button></div>';
+        if (lc && lc.p === 'high') h += '<div class="banner warn">Last time this hurt above 5/10. Stay on stage 1, and if it is not settling, get it checked.</div>';
+        else if (lc && lc.m === 'calm' && (lc.p === 'none' || lc.p === 'low') && st === 'calm') h += '<div class="banner good">Last stage 1 session was 3/10 or less. If daily life feels fine too, try stage 2.</div>'; }
+      h += '</div>'; }); h += '</div>'; }
+  h += '</div><div class="sec"><div class="sec-h"><h2>How long?</h2></div><div class="row">' + [10, 15, 20, 30].map(m => '<button class="chip' + (C.min === m ? ' on' : '') + '" data-act="c-min" data-m="' + m + '">' + m + ' min</button>').join('') + '</div></div>';
+  h += '<div class="sec"><button class="btn pri big" data-act="c-start"' + (n ? '' : ' disabled') + '>Start ' + (rehab ? 'rehab' : 'prehab') + ' routine' + (n ? ' · ~' + Math.max(1, Math.round(buildCare().reduce((x, b) => x + b.items.reduce((y, it) => y + estSec(it.d, it.rest), 0), 0) / 60)) + ' min' : '') + '</button>' + (n >= 3 && C.min <= 10 ? '<p class="mut" style="font-size:12.5px;margin-top:8px">Three areas need more than 10 minutes. Pick fewer areas for a shorter routine.</p>' : '') + (S.cur && n ? '<button class="btn" style="width:100%;margin-top:8px" data-act="c-add">Add to today’s session instead</button>' : '') + '</div>';
+  h += '<div class="sec"><details class="fold"><summary>The pain rules</summary><div class="in prose"><ul><li><b>0–3 out of 10</b> during the exercise is acceptable in rehab, as long as it settles within an hour and is no worse the next morning.</li><li><b>4–5</b>: make it easier. Smaller range, less load, or go back to stage 1.</li><li><b>6 or more</b>: stop that exercise for today.</li><li><b>Stage 1</b> uses gentle range and isometric holds at 30–50% effort, which often ease tendon pain. <b>Stage 2</b> loads it again slowly. Move up when stage 1 sits at 3/10 or less for a few sessions.</li><li><b>Keep training</b> everything that does not hurt. Use the Swap button on skill exercises that load the sore area.</li></ul><p class="mut" style="font-size:12.5px">General guidance, not a diagnosis or treatment plan.</p></div></details></div>';
+  return h; }
+
+function vLog() { const td = today(), days = new Set(S.log.map(l => l.d)); let streak = 0; for (let i = 0; i < 400; i++) { const d = new Date(); d.setDate(d.getDate() - i); const k = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); if (days.has(k)) streak++; else if (i > 0) break; }
+  const wk = S.log.filter(l => dayDiff(l.d, td) < 7).length; let h = head('Log');
+  h += '<div class="sec"><div class="tiles"><div class="tile"><b>' + S.log.length + '</b><span>sessions</span></div><div class="tile"><b>' + wk + '</b><span>last 7 days</span></div><div class="tile"><b>' + streak + '</b><span>day streak</span></div></div><div class="cal" aria-label="Last 14 days">';
+  for (let i = 13; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); const k = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); h += '<i class="' + (days.has(k) ? 'on' : '') + (i === 0 ? ' today' : '') + '">' + d.getDate() + '</i>'; }
+  h += '</div></div><div class="sec"><div class="sec-h"><h2>By skill</h2></div><table><thead><tr><th>Skill</th><th>Level</th><th class="num">Sessions</th><th class="num">Last</th></tr></thead><tbody>';
+  SKILLS.forEach(sk => { const n = sessionsOf(sk.id); h += '<tr><td><span class="dot" style="background:' + CATS[sk.cat].c + '"></span>' + esc(sk.name) + '</td><td>L' + lvl(sk.id) + ' ' + esc(sk.levels[lvl(sk.id) - 1].n) + '</td><td class="num">' + n + '</td><td class="num">' + (n ? agoText(lastTrained(sk.id)) : '–') + '</td></tr>'; });
+  h += '</tbody></table></div><div class="sec"><div class="sec-h"><h2>History</h2></div>';
+  if (!S.log.length) h += '<p class="lede">No sessions yet. Finish a workout on the Today tab and it lands here with your ratings and best sets.</p>';
+  else { h += '<div class="hist">'; for (let i = S.log.length - 1; i >= Math.max(0, S.log.length - 40); i--) { const l = S.log[i]; const rs = Object.entries(l.res || {});
+      h += '<div class="h-it"><div class="hd"><b>' + new Date(l.d + 'T12:00').toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) + '</b><span class="mut num">' + l.act + ' min · ' + l.dn + '/' + l.tot + '</span></div><div class="sk-l">' + (l.care && l.care.length ? '<span class="mut">' + l.care.map(c => (careById[c.a] ? careById[c.a].name : c.a) + ' ' + ({ pre: 'prehab', calm: 'rehab 1', build: 'rehab 2' }[c.m]) + (c.p ? ' · pain ' + ({ none: '0', low: '1–3', mid: '4–5', high: '6+' }[c.p]) : '')).join(' · ') + '</span>' + (l.sk.length ? '<br>' : '') : '') + l.sk.map(x => esc(byId[x.id] ? byId[x.id].name : x.id) + ' L' + x.l + (x.f ? ' <span class="mut">(' + x.f + ')</span>' : '')).join(' · ') + '</div>' + (rs.length ? '<div class="rs num">' + rs.map(r => esc(r[0]) + ': ' + esc(r[1])).join(' · ') + '</div>' : '') + '<div style="margin-top:6px"><button class="btn sm ghost danger" data-act="dellog" data-i="' + i + '">Delete</button></div></div>'; }
+    h += '</div>'; }
+  return h + '</div>'; }
+
+function vGuide() { let h = head('Guide');
+  h += '<div class="sec"><div class="sec-h"><h2>How it works</h2></div><div class="prose"><ol><li><b>Set your level</b> in each skill on the Skills tab. Every skill has five levels with a clear entry line and a test to move up.</li><li><b>Pick today’s skills</b> and choose how long you have.</li><li><b>Build.</b> The session takes the main drills for your level in each skill, then fills the remaining time with strength support and mobility. Sessions alternate between an A and a B version so the drills rotate.</li><li><b>Prehab tab</b>: pick joints to look after, or ease back from a niggle in two stages. Run it alone or add it to today’s session.</li><li><b>Rate each skill</b> at the end: Easy, Right or Hard. Easy adds a little to next time’s holds and reps, Hard takes a little off. When a level keeps feeling easy, the app tells you to take the test.</li></ol></div></div>';
+  h += '<div class="sec list">';
+  h += '<details class="fold"><summary>Rules that make the sessions work</summary><div class="in prose"><ul><li><b>Skill before strength, straight arms before bent arms.</b> Balance work is done fresh. Planche and levers come before handstand push-ups and pull-ups.</li><li><b>Stop 1 to 2 seconds, or 1 rep, before failure</b> on every skill set. Quality is what transfers.</li><li><b>Balance can be trained most days.</b> Strength skills (planche, levers, handstand push-up, one-arm pull-up, muscle-up) need about 48 hours between hard sessions.</li><li><b>2 to 4 skills per session.</b> Pair a push with a pull when you can: planche with front lever, handstand push-up with one-arm pull-up work.</li><li><b>Add seconds before you add lever length.</b> Hold the current shape cleanly for the test time before opening to the next one.</li><li><b>Every fourth week, deload.</b> Turn on Deload week in Settings: sets drop by about 40% and the joints catch up.</li><li><b>Pain rule.</b> Muscle effort is fine. Sharp pain in a wrist, elbow or shoulder ends that exercise for the day. Use the Swap button for the easier option.</li></ul></div></details>';
+  h += '<details class="fold"><summary>A week that fits most people</summary><div class="in prose"><table><thead><tr><th>Day</th><th>Pick</th></tr></thead><tbody><tr><td>1</td><td>Handstand or one-arm handstand · Planche · Front lever</td></tr><tr><td>2</td><td>Handstand press · L-sit to V-sit · Pistol squat</td></tr><tr><td>3</td><td>Handstand · Handstand push-up · One-arm pull-up or muscle-up</td></tr><tr><td>4</td><td>Rest or easy balance only</td></tr><tr><td>5</td><td>One-arm handstand · Planche · Back lever or front lever</td></tr><tr><td>6</td><td>Handstand press · Handstand push-up · Human flag or pistol squat</td></tr><tr><td>7</td><td>Rest</td></tr></tbody></table><p class="mut">Use “Suggest for me” on the Today tab to get the skills you have left longest, mixed across push, pull and balance.</p></div></details>';
+  h += '<details class="fold"><summary>Settings</summary><div class="in"><div class="sw"><span>Deload week <span class="mut">(about 40% fewer sets)</span></span><button class="chip sm' + (S.deload ? ' on' : '') + '" data-act="deload">' + (S.deload ? 'On' : 'Off') + '</button></div><div class="sw"><span>Timer beeps</span><button class="chip sm' + (S.sound ? ' on' : '') + '" data-act="sound">' + (S.sound ? 'On' : 'Off') + '</button></div>' + (inClaude() ? '' : '<div class="sw"><span>Theme</span><span class="row">' + ['auto', 'light', 'dark'].map(t => '<button class="chip sm' + (S.theme === t ? ' on' : '') + '" data-act="theme" data-t="' + t + '">' + t[0].toUpperCase() + t.slice(1) + '</button>').join('') + '</span></div>') + '<p class="eyebrow" style="margin:14px 0 4px">Equipment you have</p>' + Object.keys(EQ_NAMES).map(k => '<div class="sw"><span>' + EQ_NAMES[k] + '</span><button class="chip sm' + (S.eq[k] ? ' on' : '') + '" data-act="eq" data-k="' + k + '">' + (S.eq[k] ? 'Yes' : 'No') + '</button></div>').join('') + '<p class="mut" style="font-size:12.5px;margin-top:8px">Without a piece of equipment, exercises that need it are swapped for the listed alternative. Bar skills are greyed out when there is no bar. No rings are needed anywhere.</p></div></details>';
+  h += '<details class="fold"><summary>Backup</summary><div class="in prose"><p id="sync" class="mut"></p><p>Copy your data as text to keep a backup or move it to another device, then paste it below to restore.</p><div class="row"><button class="btn sm" data-act="bk-show">Show backup text</button><button class="btn sm" data-act="bk-copy">Copy backup</button>' + (inClaude() ? '' : '<button class="btn sm" data-act="bk-file">Download file</button>') + '</div><label class="eyebrow" for="bk">Backup text</label><textarea id="bk" placeholder="Paste a backup here to restore"></textarea><div class="row"><button class="btn sm" data-act="bk-restore">Restore from this text</button><button class="btn sm ghost danger" data-act="reset">Erase everything</button></div></div></details>';
+  h += '<details class="fold"><summary>Sources and credits</summary><div class="in"><p class="mut" style="font-size:13px;margin-bottom:10px">The level ladders and sessions in this app are original. They were shaped by the teachers and programs below, whose work is worth going to directly.</p><div class="src">' + SOURCES.map(s => '<div><b>' + esc(s[0]) + '</b><span class="mut">' + esc(s[1]) + '</span></div>').join('') + '</div><p class="mut" style="font-size:12.5px;margin-top:12px">Bodyweight Mastery is independent and not affiliated with or endorsed by anyone named here. It was created with AI assistance. For education only: it is not medical advice. Train within your limits and see a professional for pain or injury.</p></div></details>';
+  return h + '</div>'; }
+function paintSync() { const el = $('#sync'); if (el) el.textContent = cloudState === 'cloud' ? 'Your progress is saved to your Claude account and follows you across devices.' : memOnly ? 'This browser is not letting the app save. Copy a backup before you close the page.' : 'Your progress is saved on this device.'; }
+
+/* ───────── actions ───────── */
+let toastT = null;
+function toast(m) { const el = $('#toast'); el.textContent = m; el.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('on'), 2200); }
+function suggest() { const max = S.min <= 30 ? 2 : S.min >= 90 ? 4 : 3; const pool = SKILLS.filter(s => !missing(s)).map(s => { const d = lastTrained(s.id); return { s, age: d ? dayDiff(d, today()) : 999 }; }).filter(x => !(x.age <= 1 && ['push', 'pull'].includes(x.s.cat))).sort((a, b) => b.age - a.age || a.s.order - b.s.order);
+  const out = [], cats = {}; const take = x => { out.push(x.s.id); cats[x.s.cat] = (cats[x.s.cat] || 0) + 1; };
+  ['balance', 'push', 'pull'].forEach(c => { const x = pool.find(p => p.s.cat === c && !out.includes(p.s.id)); if (x && out.length < max) take(x); });
+  pool.forEach(x => { if (out.length < max && !out.includes(x.s.id) && !(cats[x.s.cat] >= 1 && ['push', 'pull', 'balance'].includes(x.s.cat))) take(x); });
+  S.sel = out; }
+function finish() { const W = S.cur; let tot = 0, dn = 0; const res = {};
+  W.blocks.forEach(b => b.items.forEach(it => { tot++; if (it.done) dn++; const v = parseFloat(String(it.res).replace(',', '.')); if (!isNaN(v) && v > 0) { const nm = it.sw ? it.swap : it.n; res[nm] = v; if (!S.best[nm] || v > S.best[nm]) S.best[nm] = v; } }));
+  const sk = [], hints = [];
+  W.blocks.filter(b => byId[b.key]).forEach(b => { sk.push({ id: b.key, l: b.L, v: b.v, f: b.feel || '' }); const t = tun(b.key);
+    if (b.feel === 'easy') S.tune[b.key] = Math.min(3, t + 1); else if (b.feel === 'hard') S.tune[b.key] = Math.max(-2, t - 1);
+    if (tun(b.key) >= 2 && b.L < 5) hints.push(byId[b.key].name); });
+  const care = W.blocks.filter(b => b.care).map(b => ({ a: b.area, m: b.rehab ? (b.stage || 'calm') : 'pre', p: b.pain || '' }));
+  S.log.push({ d: W.d, min: W.min, act: Math.max(1, Math.round((Date.now() - W.start) / 60000)), sk, care, dn, tot, res });
+  S.cur = null; S.open = {}; S.varOv = {}; if (T) { clearInterval(tick); T = null; paintTimer(); }
+  S.flash = ['Session saved: ' + dn + ' of ' + tot + ' exercises.', hints.length ? ' ' + hints.join(', ') + ' is feeling easy. Open Skills and try the level test.' : sk.length ? ' Ratings are in: the next session is adjusted for you.' : ' Logged under Prehab.'];
+  save(); render(); window.scrollTo(0, 0); }
+let armed = null;
+function confirmTap(key, msg) { if (armed === key) { armed = null; return true; } armed = key; toast(msg); setTimeout(() => { if (armed === key) armed = null; }, 3000); return false; }
+
+document.addEventListener('click', e => { const b = e.target.closest('[data-act],[data-tab].tab'); if (!b) return; const a = b.dataset.act, d = b.dataset;
+  if (b.classList.contains('tab') || a === 'go') { S.tab = d.tab; if (S.flash && d.tab !== 'today') S.flash = null; save(); render(); window.scrollTo(0, 0); return; }
+  const kk = d.k && d.k.includes('-') ? d.k.split('-').map(Number) : null;
+  switch (a) {
+    case 'pick': { const i = S.sel.indexOf(d.id); if (i >= 0) S.sel.splice(i, 1); else S.sel.push(d.id); S.flash = null; break; }
+    case 'clear': S.sel = []; break;
+    case 'suggest': suggest(); toast(S.sel.length ? 'Picked the skills you have left longest' : 'Nothing to suggest yet'); break;
+    case 'min': S.min = +d.m; break;
+    case 'build': { const w = buildWorkout(); if (!w) return; S.cur = w; S.open = {}; S.flash = null; const f = w.blocks.findIndex(x => x.items.length); if (f >= 0) S.open[f + '-0'] = true; save(); render(); window.scrollTo(0, 0); return; }
+    case 'flip': { S.varOv = S.varOv || {}; const cur = S.cur.blocks.find(x => x.key === d.id); S.varOv[d.id] = cur.v === 'A' ? 'B' : 'A'; const old = {}; S.cur.blocks.forEach(x => x.items.forEach(it => old[it.n] = it)); const w = buildWorkout(); w.start = S.cur.start; w.blocks.forEach(x => { const ob = S.cur.blocks.find(y => y.key === x.key); if (ob) x.feel = ob.feel || ''; x.items.forEach(it => { const o = old[it.n]; if (o) { it.done = o.done; it.u = Math.min(o.u, unitsOf(it.d)); it.got = o.got; it.res = o.res; } }); }); S.cur = w; S.open = {}; toast('Switched to session ' + S.varOv[d.id]); break; }
+    case 'open': S.open[d.k] = !S.open[d.k]; break;
+    case 'tick': { const it = itemAt(kk[0], kk[1]); it.done = !it.done; if (!it.done) { it.u = 0; it.got = 0; } else it.u = unitsOf(it.d); break; }
+    case 'hold': startHold(kk[0], kk[1]); return;
+    case 'rest': startRest(kk[0], kk[1]); return;
+    case 'swap': { const it = itemAt(kk[0], kk[1]); it.sw = !it.sw; break; }
+    case 'feel': { const bl = S.cur.blocks[+d.b]; bl.feel = bl.feel === d.f ? '' : d.f; break; }
+    case 'finish': finish(); return;
+    case 'pain': { const bl = S.cur.blocks[+d.b]; bl.pain = bl.pain === d.p ? '' : d.p; break; }
+    case 'c-mode': S.care.mode = d.m; break;
+    case 'c-area': { const i = S.care.areas.indexOf(d.id); if (i >= 0) S.care.areas.splice(i, 1); else S.care.areas.push(d.id); break; }
+    case 'c-sugg': S.care.areas = careSuggest().slice(0, 3); break;
+    case 'c-stage': S.care.st[d.id] = d.s; break;
+    case 'c-min': S.care.min = +d.m; break;
+    case 'c-start': { const bl = buildCare(); if (!bl.length) return; const rehab = S.care.mode === 'rehab'; S.cur = { d: today(), min: S.care.min, est: Math.max(1, Math.round(bl.reduce((x, b) => x + b.items.reduce((y, it) => y + estSec(it.d, it.rest), 0), 0) / 60)), blocks: bl, warn: [], start: Date.now(), rehab }; S.open = { '0-0': true }; S.tab = 'today'; save(); render(); window.scrollTo(0, 0); return; }
+    case 'c-add': { const bl = buildCare(); if (!bl.length || !S.cur) return; S.cur.blocks = S.cur.blocks.filter(b => !(b.care && S.care.areas.includes(b.area))); const ci = S.cur.blocks.findIndex(b => b.key === 'cool'); const at = ci >= 0 ? ci : S.cur.blocks.length; S.cur.blocks.splice(at, 0, ...bl); S.cur.est += Math.round(bl.reduce((x, b) => x + b.items.reduce((y, it) => y + estSec(it.d, it.rest), 0), 0) / 60); S.open = {}; S.tab = 'today'; save(); render(); toast('Added before the cool-down'); return; }
+    case 'rebuild': if (!confirmTap('rb', 'Tap again to go back and rebuild')) return; S.cur = null; S.open = {}; break;
+    case 'discard': if (!confirmTap('dc', 'Tap again to discard this session')) return; S.cur = null; S.open = {}; S.varOv = {}; if (T) { clearInterval(tick); T = null; paintTimer(); } break;
+    case 'sopen': S.open['s-' + d.id] = !S.open['s-' + d.id]; break;
+    case 'setlv': S.lv[d.id] = +d.l; S.tune[d.id] = 0; SKILLS.forEach(s => { if (!S.lv[s.id]) S.lv[s.id] = 1; }); toast(byId[d.id].name + ': level ' + d.l); break;
+    case 'tune': S.tune[d.id] = Math.min(3, Math.max(-2, tun(d.id) + (+d.d))); break;
+    case 'dellog': if (!confirmTap('dl' + d.i, 'Tap again to delete this entry')) return; S.log.splice(+d.i, 1); break;
+    case 'deload': S.deload = !S.deload; break;
+    case 'sound': S.sound = !S.sound; if (S.sound) beep(880, 120); break;
+    case 'theme': S.theme = d.t; applyTheme(); break;
+    case 'eq': S.eq[d.k] = !S.eq[d.k]; S.sel = S.sel.filter(id => !missing(byId[id])); break;
+    case 'bk-show': $('#bk').value = JSON.stringify(S); return;
+    case 'bk-copy': { const t = JSON.stringify(S); $('#bk').value = t; try { navigator.clipboard.writeText(t).then(() => toast('Backup copied'), () => toast('Select the text and copy it')); } catch (x) { toast('Select the text and copy it'); } return; }
+    case 'bk-file': { try { const u = URL.createObjectURL(new Blob([JSON.stringify(S)], { type: 'application/json' })); const l = document.createElement('a'); l.href = u; l.download = 'bodyweight-mastery-backup-' + today() + '.json'; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 2000); } catch (x) { toast('Use Copy backup instead'); } return; }
+    case 'bk-restore': { try { const o = JSON.parse($('#bk').value); if (!o || !o.v || !Array.isArray(o.log)) throw 0; if (!confirmTap('rs', 'Tap again to replace your data with this backup')) return; S = merge(o); S.tab = 'guide'; toast('Backup restored'); } catch (x) { toast('That text is not a Bodyweight Mastery backup'); return; } break; }
+    case 'reset': if (!confirmTap('rz', 'Tap again to erase all levels and history')) return; S = DEF(); S.tab = 'guide'; break;
+    case 't-stop': stopTimer(false); return;
+    case 't-bank': stopTimer(true); return;
+    case 't-skip': if (T) { T.end = Date.now(); } return;
+    case 't-add': if (T) { T.end += 15000; paintTimer(); } return;
+    default: return; }
+  save(); render(); });
+document.addEventListener('change', e => { const el = e.target; if (el.dataset && el.dataset.actIn === 'res') { const k = el.dataset.k.split('-').map(Number), it = itemAt(k[0], k[1]); if (it) { it.res = el.value.trim(); save(); } } });
+function applyTheme() { if (inClaude()) return; if (S.theme === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', S.theme); }
+
+loadLocal();
+applyTheme(); render(); initCloud();
+if (!inClaude() && window.top === window && 'serviceWorker' in navigator && location.protocol === 'https:') { try { navigator.serviceWorker.register('sw.js').catch(() => {}); } catch (e) {} }
+
+</script>
+</body></html>

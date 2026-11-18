@@ -1,0 +1,24 @@
+BODYWEIGHT MASTERY - ANDROID / PHONE PACKAGE
+
+Same steps you used for Project Mastery.
+
+1. PUT IT ONLINE (GitHub Pages)
+   - Create a new public repository on github.com, for example: bodyweight-mastery
+   - Upload everything in this folder: index.html, sw.js, manifest.webmanifest, .nojekyll and the icons folder
+   - Settings > Pages > Branch: main, folder: / (root) > Save
+   - After a minute the app is live at https://YOUR-NAME.github.io/bodyweight-mastery/
+
+2. USE IT ON THE PHONE STRAIGHT AWAY
+   - Open that address in Chrome on the phone > menu > Add to Home screen
+   - It then opens full screen and works offline
+
+3. MAKE AN ANDROID APP FILE (optional)
+   - Go to pwabuilder.com, paste the address, choose Package for stores > Android
+   - App name: Bodyweight Mastery. Keep the signing key file it gives you: you need the same key for every update
+
+UPDATING
+   - Upload the new index.html and sw.js to the same repository. Open the app twice and the new version is in.
+
+YOUR DATA
+   - Progress in the phone app is saved on that phone only. Use Guide > Backup > Download file before changing phone.
+   - The version inside Claude saves to your Claude account instead. The two do not sync with each other; use Backup to move data between them.
